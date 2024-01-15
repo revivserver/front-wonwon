@@ -10,14 +10,14 @@ function MyApp({ Component, pageProps }) {
   return <>
     <Script 
       strategy='afterInteractive'
-      src="https://www.googletagmanager.com/gtag/js?id=G-4XBFW9C1YJ"
+      src="https://www.googletagmanager.com/gtag/js?id=G-BLZSFCNBRZ"
     />
     <Script id="google-analytics" strategy='afterInteractive'>
       {`  
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-4XBFW9C1YJ');
+          gtag('config', 'G-BLZSFCNBRZ');
       `}
     </Script>
       

@@ -1,4 +1,4 @@
-import Zoom from 'next-image-zoom';
+import Image from "next/image";
 import moment from 'moment';
 
 const Review = ({ review }) => {
@@ -54,7 +54,7 @@ const Review = ({ review }) => {
                   marginBottom: '5px'
                 }}
               >
-                <Zoom
+                <Image
                   key={index}
                   alt="/"
                   src={image.attributes.url}

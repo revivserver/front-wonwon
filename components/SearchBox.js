@@ -8,6 +8,12 @@ const SearchBox = ({ searchText, updateSearch, onSearch }) => {
             placeholder="ค้นหาชื่อเขต ชื่อร้าน หรือที่อยู่ร้าน"
             value={searchText}
             onChange={(e) => updateSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === 13) {
+                onSearch();
+                e.preventDefault();
+              }
+            }}
             type="text"
           />
 

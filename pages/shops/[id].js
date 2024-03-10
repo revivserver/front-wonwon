@@ -74,6 +74,12 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
     }
   };
   const location_detail = `${address_detail} ${sub_district} ${district} ${province}`;
+  const isLocationExists = (lat, lon) => {
+    return lat !== 0 && lon !== 0;
+  };
+  const isGooglemapExists = (url) => {
+    return url;
+  };
 
   return (
     <PageLayout>
@@ -97,13 +103,16 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
           )}
           <a
             href={google_map_url}
+            disabled={!isGooglemapExists(google_map_url)}
             className="flex justify-center h-12 text-base border-2 border-solid rounded-full grow border-green-default focus:outline-none focus:border-brown-default text-brown-default bg-butter-default font-kanit"
           >
             <button>เปิดแผนที่</button>
           </a>
         </div>
         <div className="mx-4">
-          <MapDetail lat={latitude} lng={longitude} />
+          {isLocationExists(latitude, longitude) ? (
+            <MapDetail lat={latitude} lng={longitude} />
+          ) : null}
         </div>
         <div className="p-1 mx-5 mt-1 text-xs font-medium text-center rounded-lg drop-shadow-md bg-butter-light text-brown-default font-kanit">
           <p>{location_detail}</p>

@@ -72,11 +72,10 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
       <select
         value={selectedMainCategory}
         onChange={(e) => {
-          const mainSelectedCategory = e.target.value;
+          const mainSelectedCategory = parseInt(e.target.value);
           setSelectedMainCategory(e.target.value);
           setSelectedTags([]);
           handleTagsChange([mainSelectedCategory]);
-          search();
         }}
         className="w-full text-center border-2 rounded-full cursor-pointer grow border-brown-light focus:border-brown-default text-brown-default bg-butter-default font-kanit"
       >
@@ -117,13 +116,14 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
               repairTagList={repairTagList}
               selectedTags={selectedTags}
               handleTagSelect={(checked, tagId) => {
+                let newTag = [...selectedTags];
                 if (checked) {
-                  setSelectedTags([...selectedTags, tagId]);
+                  newTag.push(tagId);
                 } else {
-                  const filteredTag = selectedTags.filter((id) => id != tagId);
-                  setSelectedTags(filteredTag);
+                  newTag = selectedTags.filter((id) => id != tagId);
                 }
-                handleTagsChange(selectedTags);
+                setSelectedTags(newTag);
+                handleTagsChange(newTag);
               }}
             />
           }

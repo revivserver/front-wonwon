@@ -23,7 +23,7 @@ class RepairTagService {
   }
 
   async getAllRepairTag() {
-    const url = `/api/repair-tags/?populate=*`;
+    const url = `/api/repair-tags/?populate=*&pagination[pageSize]=100&sort[0]=id`;
     const resp = await this.axiosClient.get(url);
     return resp.data?.data;
   }

@@ -24,7 +24,7 @@ const TagModalContent = ({ repairTagList, selectedTags, handleTagSelect }) => {
     <div>
       {repairTagList.map((tag, index) => {
         return (
-          <div key={index} class="flex items-center mt-3">
+          <div key={index} className="flex items-center mt-3">
             <input
               id={`tag-checkbox-${index}`}
               type="checkbox"
@@ -34,8 +34,8 @@ const TagModalContent = ({ repairTagList, selectedTags, handleTagSelect }) => {
               className="mr-4 accent-green-default w-4 h-4 border-2 rounded-sm"
             />
             <label
-              for={`tag-checkbox-${index}`}
-              class="mr-4 text-base font-medium toppings-list-item text-brown-default font-kanit"
+              htmlFor={`tag-checkbox-${index}`}
+              className="mr-4 text-base font-medium toppings-list-item text-brown-default font-kanit"
             >
               {tag.attributes.name}
             </label>
@@ -46,8 +46,8 @@ const TagModalContent = ({ repairTagList, selectedTags, handleTagSelect }) => {
   );
 };
 
-const TagSelect = ({ repairTags }) => {
-  const [selectedMainCategory, setSelectedMainCategory] = useState(10);
+const TagSelect = ({ repairTags, handleTagsChange, search }) => {
+  const [selectedMainCategory, setSelectedMainCategory] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
 
   const mainCategoryList = useMemo(() => {
@@ -72,12 +72,15 @@ const TagSelect = ({ repairTags }) => {
       <select
         value={selectedMainCategory}
         onChange={(e) => {
+          const mainSelectedCategory = e.target.value;
           setSelectedMainCategory(e.target.value);
           setSelectedTags([]);
+          handleTagsChange([mainSelectedCategory]);
+          search();
         }}
         className="w-full text-center border-2 rounded-full cursor-pointer grow border-brown-light focus:border-brown-default text-brown-default bg-butter-default font-kanit"
       >
-        <option value={null} className="bg-butter-default">
+        <option value={''} className="bg-butter-default">
           เลือกประเภทการซ่อม
         </option>
         {mainCategoryList.map((category) => {
@@ -93,8 +96,9 @@ const TagSelect = ({ repairTags }) => {
         })}
       </select>
       <button
+        disabled={selectedMainCategory === ''}
         onClick={() => setOpenSubCategoriesModal(true)}
-        className="w-full text-center border-2 border-solid rounded-full grow border-brown-light focus:outline-none focus:border-brown-default text-brown-default font-kanit"
+        className="w-full text-center border-2 border-solid rounded-full grow border-brown-light focus:outline-none focus:border-brown-default text-brown-default font-kanit disabled:bg-brown-light"
       >
         <div className="flex justify-center font-kanit">
           {selectedTags.length > 0 ? (
@@ -119,11 +123,13 @@ const TagSelect = ({ repairTags }) => {
                   const filteredTag = selectedTags.filter((id) => id != tagId);
                   setSelectedTags(filteredTag);
                 }
+                handleTagsChange(selectedTags);
               }}
             />
           }
           textFooterButton={'ค้นหา'}
           onSubmit={() => {
+            search();
             setOpenSubCategoriesModal(false);
           }}
           onCancel={() => {

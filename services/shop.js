@@ -41,7 +41,7 @@ class ShopService {
         filters: {
           shop_repair_tag_links: {
             repair_tag: {
-              name: {
+              id: {
                 $in: checkedRepairTagText
               }
             }
@@ -64,7 +64,7 @@ class ShopService {
             },
             {
               landmark: { $containsi: searchText }
-            },
+            }
           ]
         }
       },

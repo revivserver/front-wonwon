@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import shopService from '@/services/shop';
 import repairTagService from '@/services/repairTag';
 import SearchBox from '@/components/SearchBox';
@@ -6,7 +6,7 @@ import OpeTimeList from '@/components/list/OpeTimeList';
 import PageLayout from '@/components/PageLayout';
 import LinkFooter from '@/components/LinkFooter';
 
-import FilterTagModal from '@/components/modal/filterTagModal';
+import TagSelect from '@/components/TagSelect';
 import MapList from '@/components/MapList';
 import { useGeolocated } from 'react-geolocated';
 import { getDistance } from 'geolib';
@@ -42,56 +42,40 @@ const ReviewSummary = ({ reviews }) => {
   );
 };
 
-const ShopsPage = ({ shops, repairTags, error }) => {
-  // if (error) {
-  //   return <div>An error occured: {error.message}</div>;
-  // }
+const ShopsPage = ({ shops, repairTags }) => {
+  const [searchTags, setSearchTags] = useState([]);
+
   const [inputText, changeInputText] = useState('');
   const [tempShops, setTempShops] = useState(shops);
-  const [filter, setFilter] = useState(false);
-  const [filterRepairTags, setFilterRepairTags] = useState(
-    repairTags.map((repairTag) => {
-      return { ...repairTag, checked: false };
-    })
-  );
-  const repairTagAmount = filterRepairTags.filter(
-    (filterRepair) => filterRepair.checked === true
-  ).length;
-
-  const convertRepairTagArrayToText = (filterTags) => {
-    const checkedRepairTagText = filterTags.map((filterTag) => {
-      if (filterTag.checked === true) {
-        return filterTag.attributes.name;
-      }
-    });
-    return checkedRepairTagText;
-  };
 
   const getSearchData = async () => {
-    const searchResp = shopService.GetShopsBySearch(
-      inputText,
-      convertRepairTagArrayToText(filterRepairTags)
+    const searchResp = shopService.GetShopsBySearch(inputText, searchTags);
+    const searchShops = await searchResp;
+    searchShops.sort((a, b) =>
+      calculateDistance(a.attributes.latitude, a.attributes.longitude) >
+      calculateDistance(b.attributes.latitude, b.attributes.longitude)
+        ? 1
+        : -1
     );
-    const [searchShops] = await Promise.all([searchResp]);
+
     setTempShops(searchShops);
   };
 
-  const onFormat = () => {
-    setFilter(true);
-  };
+  useEffect(() => {
+    getSearchData();
+  }, [searchTags]);
 
   const [selectedDistance, setSelectedDistance] = useState(100);
   const handleDistanceChange = (event) => {
     setSelectedDistance(event.target.value);
   };
 
-  const { coords, isGeolocationAvailable, isGeolocationEnabled } =
-    useGeolocated({
-      positionOptions: {
-        enableHighAccuracy: false
-      },
-      userDecisionTimeout: 5000
-    });
+  const { coords } = useGeolocated({
+    positionOptions: {
+      enableHighAccuracy: false
+    },
+    userDecisionTimeout: 5000
+  });
 
   const currentLoacaiton = () => {
     if (coords) return coords;
@@ -111,20 +95,6 @@ const ShopsPage = ({ shops, repairTags, error }) => {
     return diffDistance;
   };
 
-  tempShops.sort((a, b) =>
-    calculateDistance(a.attributes.latitude, a.attributes.longitude) >
-    calculateDistance(b.attributes.latitude, b.attributes.longitude)
-      ? 1
-      : -1
-  );
-
-  // const totalShops = tempShops.filter(
-  //   (shop) =>
-  //     calculateDistance(shop.attributes.latitude, shop.attributes.longitude) <=
-  //     selectedDistance
-  // );
-  const totalShops = tempShops.filter(() => true);
-
   return (
     <PageLayout>
       <div className="w-full p-4 ">
@@ -133,13 +103,24 @@ const ShopsPage = ({ shops, repairTags, error }) => {
           updateSearch={changeInputText}
           onSearch={getSearchData}
         />
+        <div className="flex no-wrap h-8 px-6 my-4 space-x-2 text-xs font-medium ">
+          <TagSelect
+            repairTags={repairTags}
+            handleTagsChange={(searchTagIds) => {
+              setSearchTags(searchTagIds);
+            }}
+            search={() => {
+              getSearchData();
+            }}
+          />
+        </div>
         <div className="flex h-8 px-6 my-4 space-x-2 text-xs font-medium ">
           <select
             value={selectedDistance}
             onChange={handleDistanceChange}
             className="text-center border-2 rounded-full cursor-pointer grow border-brown-light focus:border-brown-default text-brown-default bg-butter-default font-kanit"
           >
-            <option value="100" className="bg-butter-default แ">
+            <option value="100" className="bg-butter-default">
               ห่างจากฉัน
             </option>
             <option value="2" className=" bg-butter-default">
@@ -155,27 +136,14 @@ const ShopsPage = ({ shops, repairTags, error }) => {
               15 กม
             </option>
           </select>
-          <button
-            onClick={onFormat}
-            className="text-center border-2 border-solid rounded-full grow border-brown-light focus:outline-none focus:border-brown-default text-brown-default font-kanit"
-          >
-            <div className="flex justify-center font-kanit">
-              {repairTagAmount ? (
-                <div className="p-1 w-6 h-6 relative rounded-full bg-brown-light justify-center items-center mx-2 text-[14px] text-butter-default text-center">
-                  {repairTagAmount}
-                </div>
-              ) : null}
-              <div className="p-1">เลือกบริการซ่อม</div>
-            </div>
-          </button>
         </div>
-        <MapList initialLocation={currentLoacaiton()} shops={totalShops} />
+        <MapList initialLocation={currentLoacaiton()} shops={tempShops} />
         <div className="my-4 text-xs font-medium text-brick font-kanit">
-          เจอ {totalShops.length} ร้าน
+          เจอ {tempShops.length} ร้าน
         </div>
-        {totalShops ? (
+        {tempShops ? (
           <div className="space-y-2 flex-column">
-            {totalShops.map((shop) => {
+            {tempShops.map((shop) => {
               const id = shop.id;
               const url = `/shops/${id}`;
               const distance = calculateDistance(
@@ -246,16 +214,6 @@ const ShopsPage = ({ shops, repairTags, error }) => {
         ) : null}
         <LinkFooter />
       </div>
-      {filter && (
-        <FilterTagModal
-          repairTags={filterRepairTags}
-          updateRepairTags={setFilterRepairTags}
-          updateShops={setTempShops}
-          searchText={inputText}
-          convertArrayToText={convertRepairTagArrayToText}
-          setFilter={setFilter}
-        />
-      )}
     </PageLayout>
   );
 };

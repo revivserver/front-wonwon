@@ -24,15 +24,18 @@ class RepairTagService {
   }
 
   async getAllRepairTag() {
-    const query = qs.stringify(
-      {
-        filters: { id: { $in: [1, 2, 3, 4, 5, 6, 7, 8] } }
-      },
-      {
-        encodeValuesOnly: true
-      }
-    );
-    const url = `/api/repair-tags?${query}&sort[0]=id&populate=*`;
+    // FIXME: uncomment when update version
+    // const query = qs.stringify(
+    //   {
+    //     filters: { id: { $in: [1, 2, 3, 4, 5, 6, 7, 8] } }
+    //   },
+    //   {
+    //     encodeValuesOnly: true
+    //   }
+    // );
+    // const url = `/api/repair-tags?${query}&sort[0]=id&populate=*`;
+
+    const url = `/api/repair-tags/?populate=*&pagination[pageSize]=100&sort[0]=id`;
     const resp = await this.axiosClient.get(url);
     return resp.data?.data;
   }

@@ -72,8 +72,17 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
         onChange={(e) => {
           const mainSelectedCategory = parseInt(e.target.value);
           setSelectedMainCategory(e.target.value);
-          setSelectedTags([]);
-          handleTagsChange([mainSelectedCategory]);
+          const tagIds = repairTags
+            .filter((tag) => {
+              if (!tag.attributes.main_category_id) return false;
+              return (
+                tag.attributes.main_category_id ===
+                parseInt(mainSelectedCategory)
+              );
+            })
+            .map((tag) => tag.id);
+          setSelectedTags(tagIds);
+          handleTagsChange(tagIds);
         }}
         className="w-full text-center border-2 rounded-full cursor-pointer grow border-brown-light focus:border-brown-default text-brown-default bg-butter-default font-kanit"
       >
@@ -99,7 +108,7 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
       >
         <div className="flex justify-center font-kanit">
           {selectedTags.length > 0 ? (
-            <span className="p-1 w-6 h-6 relative bg-brown-light rounded-full bg-brown-light justify-center items-center text-[14px] text-butter-default text-center">
+            <span className="p-1 w-6 h-6 relative bg-brown-light rounded-full justify-center items-center text-[14px] text-butter-default text-center">
               {selectedTags.length}
             </span>
           ) : null}

@@ -7,7 +7,7 @@ import PageLayout from '@/components/PageLayout';
 import LinkFooter from '@/components/LinkFooter';
 
 import TagSelect from '@/components/TagSelect';
-import MapList from '@/components/MapList';
+// import MapList from '@/components/MapList';
 import { useGeolocated } from 'react-geolocated';
 import { getDistance } from 'geolib';
 import StarRating from '@/components/review/StarRating';
@@ -48,7 +48,9 @@ const ShopsPage = ({ shops, repairTags }) => {
   const [inputText, changeInputText] = useState('');
   const [tempShops, setTempShops] = useState(shops);
 
+  const [isLoading, setIsLoading] = useState(false);
   const getSearchData = async () => {
+    setIsLoading(true);
     const searchResp = shopService.GetShopsBySearch(inputText, searchTags);
     const searchShops = await searchResp;
     searchShops.sort((a, b) =>
@@ -57,11 +59,13 @@ const ShopsPage = ({ shops, repairTags }) => {
         ? 1
         : -1
     );
+    setIsLoading(false);
 
     setTempShops(searchShops);
   };
 
   useEffect(() => {
+    console.log('useEffect');
     getSearchData();
   }, [searchTags]);
 
@@ -137,7 +141,8 @@ const ShopsPage = ({ shops, repairTags }) => {
             </option>
           </select>
         </div>
-        <MapList initialLocation={currentLoacaiton()} shops={tempShops} />
+        {/* <MapList initialLocation={currentLoacaiton()} shops={tempShops} /> */}
+        {isLoading ? 'yes' : 'no'}
         <div className="my-4 text-xs font-medium text-brick font-kanit">
           เจอ {tempShops.length} ร้าน
         </div>
@@ -219,9 +224,14 @@ const ShopsPage = ({ shops, repairTags }) => {
 };
 
 ShopsPage.getInitialProps = async () => {
-  const shopResp = shopService.getAllShops();
+  // const shopResp = shopService.getAllShops();
+  // const repairResp = repairTagService.getAllRepairTag();
+  // const [shops, repairTags] = await Promise.all([shopResp, repairResp]);
+  // return { shops, repairTags };
+
   const repairResp = repairTagService.getAllRepairTag();
-  const [shops, repairTags] = await Promise.all([shopResp, repairResp]);
+  const [repairTags] = await Promise.all([repairResp]);
+  const shops = [];
   return { shops, repairTags };
 };
 

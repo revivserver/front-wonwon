@@ -7,7 +7,7 @@ import ContactModal from '@/components/modal/ContactModal';
 import Review from '@/components/review';
 import OpeTimeDetail from '@/components/detail/OpeTimeDetail';
 import PageLayout from '@/components/PageLayout';
-import MapDetail from '@/components/MapDetail';
+// import MapDetail from '@/components/MapDetail';
 
 import Contact from '@/components/shopDetail/contact';
 import ShopImage from '@/components/shopDetail/shopImage';
@@ -74,9 +74,9 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
     }
   };
   const location_detail = `${address_detail} ${sub_district} ${district} ${province}`;
-  const isLocationExists = (lat, lon) => {
-    return lat !== 0 && lon !== 0;
-  };
+  // const isLocationExists = (lat, lon) => {
+  //   return lat !== 0 && lon !== 0;
+  // };
   const isGooglemapExists = (url) => {
     return url;
   };
@@ -109,11 +109,11 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
             <button>เปิดแผนที่</button>
           </a>
         </div>
-        <div className="mx-4">
+        {/* <div className="mx-4">
           {isLocationExists(latitude, longitude) ? (
             <MapDetail lat={latitude} lng={longitude} />
           ) : null}
-        </div>
+        </div> */}
         <div className="p-1 mx-5 mt-1 text-xs font-medium text-center rounded-lg drop-shadow-md bg-butter-light text-brown-default font-kanit">
           <p>{location_detail}</p>
           <p>{landmark}</p>

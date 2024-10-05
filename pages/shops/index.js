@@ -7,7 +7,7 @@ import PageLayout from '@/components/PageLayout';
 import LinkFooter from '@/components/LinkFooter';
 
 import TagSelect from '@/components/TagSelect';
-import MapList from '@/components/MapList';
+// import MapList from '@/components/MapList';
 import { useGeolocated } from 'react-geolocated';
 import { getDistance } from 'geolib';
 import StarRating from '@/components/review/StarRating';
@@ -137,7 +137,7 @@ const ShopsPage = ({ shops, repairTags }) => {
             </option>
           </select>
         </div>
-        <MapList initialLocation={currentLoacaiton()} shops={tempShops} />
+        {/* <MapList initialLocation={currentLoacaiton()} shops={tempShops} /> */}
         <div className="my-4 text-xs font-medium text-brick font-kanit">
           เจอ {tempShops.length} ร้าน
         </div>

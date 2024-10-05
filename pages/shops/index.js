@@ -13,7 +13,7 @@ import { getDistance } from 'geolib';
 import StarRating from '@/components/review/StarRating';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 const ReviewSummary = ({ reviews }) => {
@@ -142,81 +142,94 @@ const ShopsPage = ({ shops, repairTags }) => {
           </select>
         </div>
         {/* <MapList initialLocation={currentLoacaiton()} shops={tempShops} /> */}
-        {isLoading ? 'yes' : 'no'}
-        <div className="my-4 text-xs font-medium text-brick font-kanit">
-          เจอ {tempShops.length} ร้าน
-        </div>
-        {tempShops ? (
-          <div className="space-y-2 flex-column">
-            {tempShops.map((shop) => {
-              const id = shop.id;
-              const url = `/shops/${id}`;
-              const distance = calculateDistance(
-                shop.attributes.latitude,
-                shop.attributes.longitude
-              );
-              const opeTime = OpeTimeList(
-                shop.attributes.shop_operating_times.data
-              );
-              let OpeFlag = opeTime.includes('เปิดอยู่');
-              return (
-                <div
-                  key={id}
-                  className="p-4 drop-shadow-md bg-butter-light rounded-3xl grow"
-                >
-                  <a href={url}>
-                    <div
-                      className={`text-xl ${
-                        OpeFlag ? 'text-brick' : 'text-brown-light'
-                      } font-medium font-kanit`}
-                    >
-                      {shop.attributes.name}
-                    </div>
-                    <div
-                      className={`text-xs ${
-                        OpeFlag ? 'text-brown-mid' : 'text-brown-light'
-                      } font-thin font-kanit`}
-                    >
-                      <FontAwesomeIcon icon={faLocationDot} className="mr-2" />
-                      ห่างจากฉัน {distance} กม
-                    </div>
-                    <div
-                      className={`text-base ${
-                        OpeFlag ? 'text-brown-default' : 'text-brown-light'
-                      } font-normal font-kanit`}
-                    >
-                      <div>
-                        {shop.attributes.address_detail}{' '}
-                        {shop.attributes.sub_district}{' '}
-                        {shop.attributes.district}
-                      </div>
-                    </div>
-                    {opeTime ? (
-                      <div
-                        className={`text-base ${
-                          OpeFlag ? 'text-brown-default' : 'text-brown-light'
-                        } font-normal font-kanit`}
-                      >
-                        <FontAwesomeIcon icon={faClock} className="mr-2" />
-                        <span>{opeTime}</span>
-                      </div>
-                    ) : null}
-
-                    <div
-                      className={`text-xs ${
-                        OpeFlag ? 'text-brick' : 'text-brown-light'
-                      } font-light font-kanit`}
-                    >
-                      {shop.attributes.reviews ? (
-                        <ReviewSummary reviews={shop.attributes.reviews} />
-                      ) : null}
-                    </div>
-                  </a>
-                </div>
-              );
-            })}
+        {isLoading ? (
+          <div className="w-full h-96 flex justify-center text-8xl pt-20">
+            <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
           </div>
-        ) : null}
+        ) : (
+          <>
+            <div className="my-4 text-xs font-medium text-brick font-kanit">
+              เจอ {tempShops.length} ร้าน
+            </div>
+            {tempShops ? (
+              <div className="space-y-2 flex-column">
+                {tempShops.map((shop) => {
+                  const id = shop.id;
+                  const url = `/shops/${id}`;
+                  const distance = calculateDistance(
+                    shop.attributes.latitude,
+                    shop.attributes.longitude
+                  );
+                  const opeTime = OpeTimeList(
+                    shop.attributes.shop_operating_times.data
+                  );
+                  let OpeFlag = opeTime.includes('เปิดอยู่');
+                  return (
+                    <div
+                      key={id}
+                      className="p-4 drop-shadow-md bg-butter-light rounded-3xl grow"
+                    >
+                      <a href={url}>
+                        <div
+                          className={`text-xl ${
+                            OpeFlag ? 'text-brick' : 'text-brown-light'
+                          } font-medium font-kanit`}
+                        >
+                          {shop.attributes.name}
+                        </div>
+                        <div
+                          className={`text-xs ${
+                            OpeFlag ? 'text-brown-mid' : 'text-brown-light'
+                          } font-thin font-kanit`}
+                        >
+                          <FontAwesomeIcon
+                            icon={faLocationDot}
+                            className="mr-2"
+                          />
+                          ห่างจากฉัน {distance} กม
+                        </div>
+                        <div
+                          className={`text-base ${
+                            OpeFlag ? 'text-brown-default' : 'text-brown-light'
+                          } font-normal font-kanit`}
+                        >
+                          <div>
+                            {shop.attributes.address_detail}{' '}
+                            {shop.attributes.sub_district}{' '}
+                            {shop.attributes.district}
+                          </div>
+                        </div>
+                        {opeTime ? (
+                          <div
+                            className={`text-base ${
+                              OpeFlag
+                                ? 'text-brown-default'
+                                : 'text-brown-light'
+                            } font-normal font-kanit`}
+                          >
+                            <FontAwesomeIcon icon={faClock} className="mr-2" />
+                            <span>{opeTime}</span>
+                          </div>
+                        ) : null}
+
+                        <div
+                          className={`text-xs ${
+                            OpeFlag ? 'text-brick' : 'text-brown-light'
+                          } font-light font-kanit`}
+                        >
+                          {shop.attributes.reviews ? (
+                            <ReviewSummary reviews={shop.attributes.reviews} />
+                          ) : null}
+                        </div>
+                      </a>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : null}
+          </>
+        )}
+
         <LinkFooter />
       </div>
     </PageLayout>

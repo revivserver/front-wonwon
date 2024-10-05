@@ -1,6 +1,4 @@
 import { useState, useMemo } from 'react';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Modal from '@/components/common/Modal';
 
 const TagModalContent = ({ repairTagList, selectedTags, handleTagSelect }) => {

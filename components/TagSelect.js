@@ -45,8 +45,10 @@ const TagModalContent = ({ repairTagList, selectedTags, handleTagSelect }) => {
 };
 
 const TagSelect = ({ repairTags, handleTagsChange, search }) => {
-  const [selectedMainCategory, setSelectedMainCategory] = useState('');
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedMainCategory, setSelectedMainCategory] = useState(10);
+  const [selectedTags, setSelectedTags] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+
+  // FIXME: default search is not sync to selectedTags
 
   const mainCategoryList = useMemo(() => {
     if (!repairTags) return [];
@@ -55,12 +57,20 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
     });
   }, [repairTags]);
 
+  const mapMainCatToRepairTags = useMemo(() => {
+    const mapCategories = {};
+    mainCategoryList.forEach((mainCategory) => {
+      const filteredTagIds = repairTags
+        .filter((tag) => tag.attributes.main_category_id == mainCategory.id)
+        .map((tag) => tag.id);
+      mapCategories[mainCategory.id] = filteredTagIds;
+    });
+    return mapCategories;
+  }, [mainCategoryList]);
+
   const repairTagList = useMemo(() => {
     if (!selectedMainCategory || !repairTags) return [];
-    return repairTags.filter((tag) => {
-      if (!tag.attributes.main_category_id) return false;
-      return tag.attributes.main_category_id === parseInt(selectedMainCategory);
-    });
+    return mapMainCatToRepairTags[parseInt(selectedMainCategory)];
   }, [selectedMainCategory, repairTags]);
 
   const [openSubCategoriesModal, setOpenSubCategoriesModal] = useState(false);
@@ -72,15 +82,7 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
         onChange={(e) => {
           const mainSelectedCategory = parseInt(e.target.value);
           setSelectedMainCategory(e.target.value);
-          const tagIds = repairTags
-            .filter((tag) => {
-              if (!tag.attributes.main_category_id) return false;
-              return (
-                tag.attributes.main_category_id ===
-                parseInt(mainSelectedCategory)
-              );
-            })
-            .map((tag) => tag.id);
+          const tagIds = mapMainCatToRepairTags[parseInt(mainSelectedCategory)];
           setSelectedTags(tagIds);
           handleTagsChange(tagIds);
         }}

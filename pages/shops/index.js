@@ -65,7 +65,6 @@ const ShopsPage = ({ shops, repairTags }) => {
   };
 
   useEffect(() => {
-    console.log('useEffect');
     getSearchData();
   }, [searchTags]);
 

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useState, useMemo } from 'react';
 import Modal from '@/components/common/Modal';
 
@@ -70,7 +71,12 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
 
   const repairTagList = useMemo(() => {
     if (!selectedMainCategory || !repairTags) return [];
-    return mapMainCatToRepairTags[parseInt(selectedMainCategory)];
+    const tagIds = mapMainCatToRepairTags[parseInt(selectedMainCategory)];
+    return tagIds.map((id) => {
+      return _.find(repairTags, (repairTag) => {
+        return repairTag.id == id;
+      });
+    });
   }, [selectedMainCategory, repairTags]);
 
   const [openSubCategoriesModal, setOpenSubCategoriesModal] = useState(false);
@@ -109,7 +115,7 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
         className="w-full text-center border-2 border-solid rounded-full grow border-brown-light focus:outline-none focus:border-brown-default text-brown-default font-kanit disabled:bg-brown-light"
       >
         <div className="flex justify-center font-kanit">
-          {selectedTags.length > 0 ? (
+          {selectedTags && selectedTags.length > 0 ? (
             <span className="p-1 w-6 h-6 relative bg-brown-light rounded-full justify-center items-center text-[14px] text-butter-default text-center">
               {selectedTags.length}
             </span>

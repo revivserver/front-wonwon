@@ -68,11 +68,6 @@ const ShopsPage = ({ shops, repairTags }) => {
     getSearchData();
   }, [searchTags]);
 
-  const [selectedDistance, setSelectedDistance] = useState(100);
-  const handleDistanceChange = (event) => {
-    setSelectedDistance(event.target.value);
-  };
-
   const { coords } = useGeolocated({
     positionOptions: {
       enableHighAccuracy: false
@@ -106,40 +101,15 @@ const ShopsPage = ({ shops, repairTags }) => {
           updateSearch={changeInputText}
           onSearch={getSearchData}
         />
-        <div className="flex no-wrap h-8 px-6 my-4 space-x-2 text-xs font-medium ">
-          <TagSelect
-            repairTags={repairTags}
-            handleTagsChange={(searchTagIds) => {
-              setSearchTags(searchTagIds);
-            }}
-            search={() => {
-              getSearchData();
-            }}
-          />
-        </div>
-        <div className="flex h-8 px-6 my-4 space-x-2 text-xs font-medium ">
-          <select
-            value={selectedDistance}
-            onChange={handleDistanceChange}
-            className="text-center border-2 rounded-full cursor-pointer grow border-brown-light focus:border-brown-default text-brown-default bg-butter-default font-kanit"
-          >
-            <option value="100" className="bg-butter-default">
-              ห่างจากฉัน
-            </option>
-            <option value="2" className=" bg-butter-default">
-              2 กม
-            </option>
-            <option value="5" className=" bg-butter-default">
-              5 กม
-            </option>
-            <option value="10" className=" bg-butter-default">
-              10 กม
-            </option>
-            <option value="15" className=" bg-butter-default">
-              15 กม
-            </option>
-          </select>
-        </div>
+        <TagSelect
+          repairTags={repairTags}
+          handleTagsChange={(searchTagIds) => {
+            setSearchTags(searchTagIds);
+          }}
+          search={() => {
+            getSearchData();
+          }}
+        />
         {/* <MapList initialLocation={currentLoacaiton()} shops={tempShops} /> */}
         {isLoading ? (
           <div className="w-full h-96 flex justify-center text-8xl pt-20">

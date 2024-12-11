@@ -87,7 +87,7 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
 
   return (
     <>
-      <div className="flex no-wrap h-8 px-6 my-4 space-x-2 text-xs font-medium ">
+      <div className="flex no-wrap h-8 my-4 space-x-2 text-xs font-medium ">
         <select
           value={selectedMainCategory}
           onChange={(e) => {
@@ -116,7 +116,7 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
           })}
         </select>
       </div>
-      <div className="flex no-wrap h-8 px-6 my-4 space-x-2 text-xs font-medium ">
+      <div className="flex no-wrap h-8 my-4 space-x-2 text-xs font-medium ">
         <button className="w-full text-center border-2 border-solid rounded-full grow border-brown-light focus:outline-none focus:border-brown-default text-brown-default font-kanit disabled:bg-brown-light">
           <div className="flex justify-center font-kanit ">
             <select

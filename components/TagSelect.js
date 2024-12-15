@@ -87,7 +87,7 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
 
   return (
     <>
-      <div className="flex no-wrap h-8 my-4 space-x-2 text-xs font-medium ">
+      <div className="flex no-wrap h-8 mt-4 mb-2 space-x-2 text-xs font-medium">
         <select
           value={selectedMainCategory}
           onChange={(e) => {
@@ -98,7 +98,7 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
             setSelectedTags(tagIds);
             handleTagsChange(tagIds);
           }}
-          className="w-full text-center border-2 rounded-full cursor-pointer grow border-brown-light focus:border-brown-default text-brown-default bg-butter-default font-kanit"
+          className="w-full text-center border-2 rounded-full cursor-pointer grow border-brown-light focus:border-brown-default text-brown-mid bg-butter-default font-kanit"
         >
           <option value={''} className="bg-butter-default">
             เลือกประเภทการซ่อม
@@ -116,9 +116,9 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
           })}
         </select>
       </div>
-      <div className="flex no-wrap h-8 my-4 space-x-2 text-xs font-medium ">
+      <div className="flex no-wrap h-8 my-2 space-x-4 text-xs font-medium ">
         <button className="w-full text-center border-2 border-solid rounded-full grow border-brown-light focus:outline-none focus:border-brown-default text-brown-default font-kanit disabled:bg-brown-light">
-          <div className="flex justify-center font-kanit ">
+          <div className="flex justify-center font-kanit text-brown-mid ">
             <select
               value={selectedDistance}
               onChange={handleDistanceChange}
@@ -148,19 +148,19 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
           onClick={() => setOpenSubCategoriesModal(true)}
           className="w-full text-center border-2 border-solid rounded-full grow border-brown-light focus:outline-none focus:border-brown-default text-brown-default font-kanit disabled:bg-brown-light"
         >
-          <div className="flex justify-center font-kanit">
+          <div className="flex justify-center font-kanit text-brown-mid">
             {selectedTags && selectedTags.length > 0 ? (
               <span className="p-1 w-6 h-6 relative bg-brown-light rounded-full justify-center items-center text-[14px] text-butter-default text-center">
                 {selectedTags.length}
               </span>
             ) : null}
-            <div className="p-1">เลือกบริการซ่อม</div>
+            <div className="p-1">ปรับรูปแบบการซ่อม</div>
           </div>
         </button>
       </div>
       {openSubCategoriesModal ? (
         <Modal
-          textHeader={'เลือกบริการซ่อม'}
+          textHeader={'ปรับรูปแบบการซ่อม'}
           content={
             <TagModalContent
               repairTagList={repairTagList}

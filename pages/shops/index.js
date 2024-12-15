@@ -117,8 +117,8 @@ const ShopsPage = ({ shops, repairTags }) => {
           </div>
         ) : (
           <>
-            <div className="my-4 text-xs font-medium text-brick font-kanit">
-              เจอ {tempShops.length} ร้าน
+            <div className="mt-6 mb-3 text-xs font-medium text-brick font-kanit">
+              ผลการค้นหา {tempShops.length} ร้านซ่อม
             </div>
             {tempShops ? (
               <div className="space-y-2 flex-column">

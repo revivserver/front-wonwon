@@ -14,6 +14,7 @@ const Modal = ({
       {/* <!-- Modal content --> */}
       <div className="relative bg-butter-default rounded-t-[24px] shadow-md  px-10 pt-8 w-full">
         {/* <!-- Modal header --> */}
+
         <div className="pb-2 flex items-center justify-between border-b rounded-t border-dashed border-butter-dark">
           <h3 className="text-xl text-brown-mid font-kanit">{textHeader}</h3>
           <button
@@ -40,8 +41,18 @@ const Modal = ({
           </button>
         </div>
         {/* <!-- Modal body --> */}
-        <div className="py-4 text-brown-default font-kanit">{content}</div>
+        <div className="py-4 text-brown-default font-kanit border-b rounded-t border-dashed border-butter-dark">
+          {content}
+        </div>
         {/* <!-- Modal footer --> */}
+        <div className="py-4 text-brown-default font-kanit">
+          <input
+            // id={`tag-checkbox-${index}`}
+            type="checkbox"
+            className="mr-4 accent-green-default w-4 h-4 border-2 rounded-sm"
+          />
+          เลือกทั้งหมด
+        </div>
         <div className="flex justify-center pt-4 pb-8">
           <button
             type="button"

@@ -54,17 +54,58 @@ const LandingPage = ({}) => {
               }}
             />
           </div>
-          <div className="flex flex-col items-center justify-center mt-4 text-xs font-normal text-brown-default font-kanit">
-            <p className="text-xl font-medium text-center ">WonWon</p>
+          <div className="flex flex-col items-center justify-center mt-4 text-xs font-normal text-brown-default font-kanit mb-28">
+            {/* <p className="text-xl font-medium text-center ">WonWon</p> */}
             <p className="mt-2 text-base font-normal ">
-              รวมร้านซ่อมใกล้บ้านคุณ <br />
-              สนับสนุนสังคมแห่งการซ่อมแซมที่ไม่รู้จบ
+              {/* รวมร้านซ่อมใกล้บ้านคุณ <br />
+              สนับสนุนสังคมแห่งการซ่อมแซมที่ไม่รู้จบ */}
+              แพลตฟอร์มรวบรวมร้าน (ช่าง) ซ่อมเสื้อผ้า <br />
+              จากทั่วกรุงเทพให้คุณได้ค้นพบร้าน local ใหม่ๆ <br />
+              ละแวกใกล้คุณ เลือกร้านที่ตรงใจได้ตามระยะทาง, <br />
+              บริการ และรีวิวจากเพื่อนๆในคอมมูนิตี้ <br />
+              ไม่ว่าจะตัดขาหรือซ่อมรูขาด ร้านใกล้บ้าน
+              <br />
+              หรือใกล้ที่ทำงานก็หาได้ที่ Repair Market
             </p>
-            <p className="mt-4 text-xl font-medium ">ฟีเจอร์ตอนนี้:</p>
-            <ul className="flex flex-col items-center mt-2 text-base font-normal list-disc ">
-              <li className=" w-fit">ค้นหาร้านซ่อมเสื้อในกรุงเทพฯ</li>
+            {/* <p className="mt-4 text-xl font-medium ">ฟีเจอร์ตอนนี้:</p> */}
+            {/* <ul className="flex flex-col items-center mt-2 text-base font-normal list-disc ">
+              <li className=" w-fit">
+                ค้นหาร้านซ่อมเสื้อ ร้านซ่อมนาฬิกา <br />
+                กระเป๋า รองเท้า คอมพิวเตอร์ <br />
+                เครื่องใช้ไฟฟ้า ในกรุงเทพฯ 
+                // แพลตฟอร์มรวบรวมร้าน (ช่าง)
+              </li>
               <li className=" w-fit">รีวิวร้านให้ทุกคนรู้จัก</li>
-            </ul>
+            </ul> */}
+          </div>
+          <div className="flex no-wrap h-8 mt-4 mb-2 space-x-2 text-xs font-medium">
+            <select
+              // value={selectedMainCategory}
+              onChange={(e) => {
+                const mainSelectedCategory = parseInt(e.target.value);
+                setSelectedMainCategory(e.target.value);
+                // const tagIds =
+                //   mapMainCatToRepairTags[parseInt(mainSelectedCategory)];
+                setSelectedTags(tagIds);
+                handleTagsChange(tagIds);
+              }}
+              className="w-full text-center border-2 rounded-full cursor-pointer grow border-brown-light focus:border-brown-default text-brown-mid bg-butter-default font-kanit"
+            >
+              <option value={''} className="bg-butter-default">
+                เลือกประเภทการซ่อม
+              </option>
+              {/* {mainCategoryList.map((category) => { */}
+              {/* return (
+                  <option
+                    key={category.id}
+                    value={category.id}
+                    className="bg-butter-default"
+                  >
+                    {category.attributes.name}
+                  </option>
+                );
+              })} */}
+            </select>
           </div>
           <div className="flex justify-center mt-3">
             <a href={url}>

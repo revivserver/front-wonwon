@@ -54,31 +54,20 @@ const LandingPage = ({}) => {
               }}
             />
           </div>
-          <div className="flex flex-col items-center justify-center mt-4 text-xs font-normal text-brown-default font-kanit mb-28">
-            {/* <p className="text-xl font-medium text-center ">WonWon</p> */}
+          <div className="flex flex-col items-center justify-center mt-4 text-xs font-normal text-brown-default font-kanit mb-16">
+            <p className="text-xl font-medium text-center ">WonWon</p>
             <p className="mt-2 text-base font-normal ">
-              {/* รวมร้านซ่อมใกล้บ้านคุณ <br />
-              สนับสนุนสังคมแห่งการซ่อมแซมที่ไม่รู้จบ */}
-              แพลตฟอร์มรวบรวมร้าน (ช่าง) ซ่อมเสื้อผ้า <br />
-              จากทั่วกรุงเทพให้คุณได้ค้นพบร้าน local ใหม่ๆ <br />
-              ละแวกใกล้คุณ เลือกร้านที่ตรงใจได้ตามระยะทาง, <br />
-              บริการ และรีวิวจากเพื่อนๆในคอมมูนิตี้ <br />
-              ไม่ว่าจะตัดขาหรือซ่อมรูขาด ร้านใกล้บ้าน
-              <br />
-              หรือใกล้ที่ทำงานก็หาได้ที่ Repair Market
+              รวมร้านซ่อมเสื้อผ้า นาฬิกา กระเป๋า <br />
+              รองเท้า คอมพิวเตอร์ เครื่องใช้ไฟฟ้า ใกล้บ้านคุณ <br />
+              สนับสนุนสังคมแห่งการซ่อมแซมที่ไม่รู้จบ <br />
             </p>
-            {/* <p className="mt-4 text-xl font-medium ">ฟีเจอร์ตอนนี้:</p> */}
-            {/* <ul className="flex flex-col items-center mt-2 text-base font-normal list-disc ">
-              <li className=" w-fit">
-                ค้นหาร้านซ่อมเสื้อ ร้านซ่อมนาฬิกา <br />
-                กระเป๋า รองเท้า คอมพิวเตอร์ <br />
-                เครื่องใช้ไฟฟ้า ในกรุงเทพฯ 
-                // แพลตฟอร์มรวบรวมร้าน (ช่าง)
-              </li>
+            <p className="mt-4 text-xl font-medium ">ฟีเจอร์ตอนนี้:</p>
+            <ul className="flex flex-col items-center mt-2 text-base font-normal list-disc ">
+              <li className=" w-fit">ค้นหาร้านซ่อม</li>
               <li className=" w-fit">รีวิวร้านให้ทุกคนรู้จัก</li>
-            </ul> */}
+            </ul>
           </div>
-          <div className="flex no-wrap h-8 mt-4 mb-2 space-x-2 text-xs font-medium">
+          <div className="flex justify-center mt-3">
             <select
               // value={selectedMainCategory}
               onChange={(e) => {
@@ -89,7 +78,7 @@ const LandingPage = ({}) => {
                 setSelectedTags(tagIds);
                 handleTagsChange(tagIds);
               }}
-              className="w-full text-center border-2 rounded-full cursor-pointer grow border-brown-light focus:border-brown-default text-brown-mid bg-butter-default font-kanit"
+              className="px-2 py-1 rounded-full w-80 btn btn-primary bg-butter-default text-brown-mid font-kanit border-2  border-brown-light text-sm"
             >
               <option value={''} className="bg-butter-default">
                 เลือกประเภทการซ่อม
@@ -113,7 +102,7 @@ const LandingPage = ({}) => {
                 type="button"
                 className=" h-12 rounded-full w-80 btn btn-primary bg-green-default text-brown-default font-kanit"
               >
-                เริ่มใช้งาน
+                เริ่มลย
               </button>
             </a>
           </div>

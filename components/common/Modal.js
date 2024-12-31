@@ -2,7 +2,6 @@ const Modal = ({ textHeader = null, content, onCancel, footer }) => {
   return (
     <div
       tabIndex="-1"
-      aria-hidden="true"
       className="flex !m-0 fixed top-0 right-0 left-0 z-50 justify-center items-end w-full h-full  bg-opacity-75 backdrop-blur-lg"
     >
       {/* <!-- Modal content --> */}

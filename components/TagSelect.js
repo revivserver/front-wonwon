@@ -2,7 +2,14 @@ import _ from 'lodash';
 import { useState, useMemo } from 'react';
 import Modal from '@/components/common/Modal';
 
-const TagModalContent = ({ repairTagList, selectedTags, handleTagSelect }) => {
+const TagModalContent = ({
+  repairTagList,
+  selectedTags,
+  handleTagSelect,
+  onSelectAll
+}) => {
+  const [selectAll, setSelectAll] = useState(false);
+
   // example data
   // repairTagList = [
   //   {
@@ -17,6 +24,7 @@ const TagModalContent = ({ repairTagList, selectedTags, handleTagSelect }) => {
   // ];
 
   const onClick = (e) => {
+    setSelectAll(false);
     handleTagSelect(e.target.checked, parseInt(e.target.value));
   };
   return (
@@ -43,9 +51,13 @@ const TagModalContent = ({ repairTagList, selectedTags, handleTagSelect }) => {
       })}
       <div className="mt-3 pt-4 text-brown-default font-kanit border-t border-dashed border-butter-dark">
         <input
-          // id={`tag-checkbox-${index}`}
           type="checkbox"
           className="mr-4 accent-green-default w-4 h-4 border-2 rounded-sm"
+          onChange={() => {
+            onSelectAll(!selectAll);
+            setSelectAll(!selectAll);
+          }}
+          checked={selectAll}
         />
         เลือกทั้งหมด
       </div>
@@ -181,7 +193,22 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
                   newTag = selectedTags.filter((id) => id != tagId);
                 }
                 setSelectedTags(newTag);
-                handleTagsChange(newTag);
+                if (newTag.length === 0) {
+                  const allTagIds = repairTagList.map((ele) => ele.id);
+                  handleTagsChange(allTagIds);
+                } else {
+                  handleTagsChange(newTag);
+                }
+              }}
+              onSelectAll={(selectAll) => {
+                const allTagIds = repairTagList.map((ele) => ele.id);
+                if (selectAll) {
+                  setSelectedTags(allTagIds);
+                  handleTagsChange(allTagIds);
+                } else {
+                  setSelectedTags([]);
+                  handleTagsChange(allTagIds);
+                }
               }}
             />
           }
@@ -205,8 +232,9 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
                   type="button"
                   onClick={(e) => {
                     e.preventDefault();
-                    // search();
-                    // setOpenSubCategoriesModal(false);
+                    setSelectedTags([]);
+                    const allTagIds = repairTagList.map((ele) => ele.id);
+                    handleTagsChange(allTagIds);
                   }}
                   className="mt-3 border-2 border-solid border-green-default  h-12 text-base font-normal rounded-full w-80 btn btn-primary bg-butter-default text-brown-default font-kanit"
                 >

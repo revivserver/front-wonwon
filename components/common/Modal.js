@@ -1,10 +1,4 @@
-const Modal = ({
-  textHeader = null,
-  content,
-  textFooterButton,
-  onSubmit,
-  onCancel
-}) => {
+const Modal = ({ textHeader = null, content, onCancel, footer }) => {
   return (
     <div
       tabIndex="-1"
@@ -41,27 +35,9 @@ const Modal = ({
           </button>
         </div>
         {/* <!-- Modal body --> */}
-        <div className="py-4 text-brown-default font-kanit border-b rounded-t border-dashed border-butter-dark">
-          {content}
-        </div>
+        <div className="py-4 text-brown-default font-kanit">{content}</div>
         {/* <!-- Modal footer --> */}
-        <div className="py-4 text-brown-default font-kanit">
-          <input
-            // id={`tag-checkbox-${index}`}
-            type="checkbox"
-            className="mr-4 accent-green-default w-4 h-4 border-2 rounded-sm"
-          />
-          เลือกทั้งหมด
-        </div>
-        <div className="flex justify-center pt-4 pb-8">
-          <button
-            type="button"
-            onClick={onSubmit}
-            className="h-12 text-base font-normal rounded-full w-80 btn btn-primary bg-green-default text-brown-default font-kanit"
-          >
-            {textFooterButton}
-          </button>
-        </div>
+        {footer}
       </div>
     </div>
   );

@@ -102,7 +102,7 @@ const LandingPage = ({}) => {
                 type="button"
                 className=" h-12 rounded-full w-80 btn btn-primary bg-green-default text-brown-default font-kanit"
               >
-                เริ่มลย
+                เริ่มเลย
               </button>
             </a>
           </div>

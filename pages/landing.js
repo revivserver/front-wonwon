@@ -33,7 +33,8 @@ const LandingPage = ({}) => {
             <Image
               alt="logo"
               src={wonwon_icon}
-              width={200}
+              // width={200}
+              width={100}
               height={120}
               style={{
                 filter:
@@ -54,7 +55,8 @@ const LandingPage = ({}) => {
               }}
             />
           </div>
-          <div className="flex flex-col items-center justify-center mt-4 text-xs font-normal text-brown-default font-kanit mb-16">
+          {/* <div className="flex flex-col items-center justify-center mt-4 text-xs font-normal text-brown-default font-kanit mb-16"> */}
+          <div className="flex flex-col items-center justify-center mt-4 text-xs font-normal text-brown-default font-kanit mb-4">
             <p className="text-xl font-medium text-center ">WonWon</p>
             <p className="mt-2 text-base font-normal ">
               รวมร้านซ่อมเสื้อผ้า นาฬิกา กระเป๋า <br />

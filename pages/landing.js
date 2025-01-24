@@ -33,8 +33,7 @@ const LandingPage = ({}) => {
             <Image
               alt="logo"
               src={wonwon_icon}
-              // width={200}
-              width={100}
+              width={150}
               height={120}
               style={{
                 filter:
@@ -69,7 +68,7 @@ const LandingPage = ({}) => {
               <li className=" w-fit">รีวิวร้านให้ทุกคนรู้จัก</li>
             </ul>
           </div>
-          <div className="flex justify-center mt-3">
+          {/* <div className="flex justify-center mt-3">
             <select
               // value={selectedMainCategory}
               onChange={(e) => {
@@ -85,8 +84,8 @@ const LandingPage = ({}) => {
               <option value={''} className="bg-butter-default">
                 เลือกประเภทการซ่อม
               </option>
-              {/* {mainCategoryList.map((category) => { */}
-              {/* return (
+              {mainCategoryList.map((category) => {
+                return (
                   <option
                     key={category.id}
                     value={category.id}
@@ -95,9 +94,9 @@ const LandingPage = ({}) => {
                     {category.attributes.name}
                   </option>
                 );
-              })} */}
+              })}
             </select>
-          </div>
+          </div> */}
           <div className="flex justify-center mt-3">
             <a href={url}>
               <button

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Modal from '@/components/common/Modal';
 
 const TagModalContent = ({
@@ -9,7 +9,13 @@ const TagModalContent = ({
   onSelectAll
 }) => {
   const [selectAll, setSelectAll] = useState(false);
-
+  useEffect(() => {
+    if (selectedTags.length == 0) {
+      setSelectAll(false);
+    } else if (repairTagList.length == selectedTags.length) {
+      setSelectAll(true);
+    }
+  }, [selectedTags]);
   // example data
   // repairTagList = [
   //   {

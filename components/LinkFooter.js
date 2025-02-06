@@ -50,7 +50,7 @@ const LinkFooter = () => {
         <div
           onClick={() =>
             openInNewTab(
-              'https://docs.google.com/forms/d/e/1FAIpQLSf_0Sg7j_PHtpFzFLVRMKdR7Lbjj_8-o3HdJB4NxeyJlso8jw/viewform'
+              'https://docs.google.com/forms/d/e/1FAIpQLSczUWK8jXi3uzpWBx0gEUOGMyiDVselmt_qwEeB0enRfUT6dQ/viewform'
             )
           }
           className=" cursor-pointer bg-[#835020] h-[48px] rounded-lg w-2/4 justify-between items-center flex p-2"

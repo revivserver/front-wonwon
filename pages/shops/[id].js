@@ -128,7 +128,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
                             .attributes.name;
                         return (
                           <div
-                            key={index}
+                            key={`repaire-tag-${index}`}
                             className="mr-3 mt-3 p-1 border-[1px] border-primary-content rounded text-brown-mid text-base font-kanit font-normal"
                           >
                             {name}
@@ -153,9 +153,9 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
               <div className="flex justify-around p-4 mt-2">
                 {payments.payments.map((payment, index) => {
                   if (payment === 'cash') {
-                    return <CashIcon />;
+                    return <CashIcon key={`payment-${index}`} />;
                   } else if (payment === 'online') {
-                    return <TransferIcon />;
+                    return <TransferIcon key={`payment-${index}`} />;
                   } else {
                     return null;
                   }
@@ -196,7 +196,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
               [(review) => review.attributes.createdAt],
               ['desc']
             ).map((review, index) => (
-              <div key={index} className="pt-4 pb-4">
+              <div key={`review-${index}`} className="pt-4 pb-4">
                 <Review review={review} />
               </div>
             ))}

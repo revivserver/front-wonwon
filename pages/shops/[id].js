@@ -7,16 +7,13 @@ import ContactModal from '@/components/modal/ContactModal';
 import Review from '@/components/review';
 import OpeTimeDetail from '@/components/detail/OpeTimeDetail';
 import PageLayout from '@/components/PageLayout';
-// import MapDetail from '@/components/MapDetail';
 
 import Contact from '@/components/shopDetail/contact';
 import ShopImage from '@/components/shopDetail/shopImage';
+import CashIcon from '@/components/detail/CashIcon';
+import TransferIcon from '@/components/detail/TransferIcon';
 
-import {
-  faClock,
-  faWallet,
-  faMoneyBillTransfer
-} from '@fortawesome/free-solid-svg-icons';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -33,8 +30,6 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
     district,
     sub_district,
     landmark,
-    latitude,
-    longitude,
     shop_images,
     shop_repair_tag_links,
     contacts,
@@ -109,11 +104,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
             <button>เปิดแผนที่</button>
           </a>
         </div>
-        {/* <div className="mx-4">
-          {isLocationExists(latitude, longitude) ? (
-            <MapDetail lat={latitude} lng={longitude} />
-          ) : null}
-        </div> */}
+
         <div className="p-1 mx-5 mt-1 text-xs font-medium text-center rounded-lg drop-shadow-md bg-butter-light text-brown-default font-kanit">
           <p>{location_detail}</p>
           <p>{landmark}</p>
@@ -162,17 +153,9 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
               <div className="flex justify-around p-4 mt-2">
                 {payments.payments.map((payment, index) => {
                   if (payment === 'cash') {
-                    return (
-                      <FontAwesomeIcon key={index} icon={faWallet} size="xl" />
-                    );
+                    return <CashIcon />;
                   } else if (payment === 'online') {
-                    return (
-                      <FontAwesomeIcon
-                        key={index}
-                        icon={faMoneyBillTransfer}
-                        size="xl"
-                      />
-                    );
+                    return <TransferIcon />;
                   } else {
                     return null;
                   }

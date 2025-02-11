@@ -5,7 +5,7 @@
 
 @layer components {
   .card {
-    background-color: theme('colors.neutral-content');
+    /* background-color: theme('colors.neutral-content'); */
     box-shadow: theme('boxShadow.md');
   }
 }

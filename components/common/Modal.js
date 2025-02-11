@@ -1,19 +1,13 @@
-const Modal = ({
-  textHeader = null,
-  content,
-  textFooterButton,
-  onSubmit,
-  onCancel
-}) => {
+const Modal = ({ textHeader = null, content, onCancel, footer }) => {
   return (
     <div
       tabIndex="-1"
-      aria-hidden="true"
       className="flex !m-0 fixed top-0 right-0 left-0 z-50 justify-center items-end w-full h-full  bg-opacity-75 backdrop-blur-lg"
     >
       {/* <!-- Modal content --> */}
       <div className="relative bg-butter-default rounded-t-[24px] shadow-md  px-10 pt-8 w-full">
         {/* <!-- Modal header --> */}
+
         <div className="pb-2 flex items-center justify-between border-b rounded-t border-dashed border-butter-dark">
           <h3 className="text-xl text-brown-mid font-kanit">{textHeader}</h3>
           <button
@@ -42,15 +36,7 @@ const Modal = ({
         {/* <!-- Modal body --> */}
         <div className="py-4 text-brown-default font-kanit">{content}</div>
         {/* <!-- Modal footer --> */}
-        <div className="flex justify-center pt-4 pb-8">
-          <button
-            type="button"
-            onClick={onSubmit}
-            className="h-12 text-base font-normal rounded-full w-80 btn btn-primary bg-green-default text-brown-default font-kanit"
-          >
-            {textFooterButton}
-          </button>
-        </div>
+        {footer}
       </div>
     </div>
   );

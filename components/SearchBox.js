@@ -1,6 +1,6 @@
 const SearchBox = ({ searchText, updateSearch, onSearch }) => {
   return (
-    <div className="flex justify-center w-full px-6 mt-6">
+    <div className="flex justify-center w-full mt-6">
       <form className="grow">
         <label className="relative block ">
           <input

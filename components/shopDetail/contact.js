@@ -60,9 +60,9 @@ const Contact = ({ contact, onIconClick }) => {
                 : contactMethod.name === 'line'
                 ? { color: '#00B900' }
                 : contactMethod.name === 'webpage'
-                ? { color: '#443616' }
+                ? { color: '#4aade7' }
                 : contactMethod.name === 'email'
-                ? { color: '#443616' }
+                ? { color: '#f2555f' }
                 : { color: '#1877F2' };
 
             const linkToContact =
@@ -104,16 +104,6 @@ const Contact = ({ contact, onIconClick }) => {
               );
             }
           })}
-          {/* {emails ? (
-          <a href={`mailto:${emails[0]}`}>
-            <FontAwesomeIcon icon={faEnvelope} size="xl" />
-          </a>
-        ) : null}
-        {webpages ? (
-          <a href={webpages[0]} target="_blank" rel="noreferrer">
-            <FontAwesomeIcon icon={faGlobe} size="xl" />
-          </a>
-        ) : null} */}
         </div>
       )}
     </div>

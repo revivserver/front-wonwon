@@ -24,13 +24,16 @@ class ShopService {
   }
 
   async GetByID(id) {
-    const url = `/api/Shops/${id}?populate=deep`;
+    // const url = `/api/Shops/${id}?populate=deep`;
+    // const url = `/api/Shops/?populate=*&filters[id][$eq]=${id}`;
+    const url = `/api/Shops/fuikc8x1lutlk315a4xijhi9?populate=*`;
     const resp = await this.axiosClient.get(url);
     return resp.data?.data;
   }
 
   async GetReviewsByShopID(id) {
-    const url = `/api/reviews?filters[shop]=${id}&populate=deep`;
+    // const url = `/api/reviews?filters[shop]=${id}&populate=deep`;
+    const url = `/api/reviews?filters[shop]=${id}`;
     const resp = await this.axiosClient.get(url);
     return resp.data?.data;
   }
@@ -72,7 +75,8 @@ class ShopService {
         encodeValuesOnly: true // prettify URL
       }
     );
-    const url = `/api/Shops?${query}&sort[0]=name&populate=deep&pagination[pageSize]=150`;
+    // const url = `/api/Shops?${query}&sort[0]=name&populate=deep&pagination[pageSize]=150`;
+    const url = `/api/Shops?${query}&sort[0]=name&pagination[pageSize]=150`;
     const resp = await this.axiosClient.get(url);
     return resp.data?.data;
   }

@@ -23,6 +23,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
   const [clickedContactIcon, setClickedContactIcon] = useState('');
 
   const { id } = shop;
+  // console.log(shop);
   const {
     name,
     address_detail,
@@ -36,7 +37,10 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
     payments,
     google_map_url,
     notes
-  } = shop.attributes;
+  // } = shop.attributes;
+  } = shop;
+  // console.log(shop);
+  // console.log(shop.contacts.phone?.length);
 
   const condition =
     notes && notes?.length > 0
@@ -49,13 +53,13 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
   const additionalContact = useMemo(() => {
     let res = {};
     if (clickedContactIcon === 'instagram') {
-      res.data = contacts.instagram?.length > 0 ? contacts.instagram : null;
+      res = contacts.instagram?.length > 0 ? contacts.instagram : null;
     } else if (clickedContactIcon === 'line') {
-      res.data = contacts.line?.length > 0 ? contacts.line : null;
+      res = contacts.line?.length > 0 ? contacts.line : null;
     } else {
-      res.data = contacts.facebook?.length > 0 ? contacts.facebook : null;
+      res = contacts.facebook?.length > 0 ? contacts.facebook : null;
     }
-    res.name = clickedContactIcon;
+    if (!!res){res.name = clickedContactIcon ;}
     return res;
   }, [contacts, clickedContactIcon]);
 
@@ -82,7 +86,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
         <p className="mx-4 text-2xl font-medium text-brick font-kanit">
           {name}
         </p>
-        <ShopImage shop_images={shop_images.data} />
+        {/* <ShopImage shop_images={shop_images} /> */}
         <div className="flex mx-4 mb-2 space-x-2 ">
           {phones && phones.length > 0 ? (
             <a
@@ -113,7 +117,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
           <div className="grid gap-6 px-10 py-6 my-3 divide-y card divide-dashed divide-butter-dark">
             <div className="flex">
               <FontAwesomeIcon icon={faClock} className="mr-2 fa-xl" />
-              <OpeTimeDetail ope={shop.attributes.shop_operating_times.data} />
+              <OpeTimeDetail ope={shop.shop_operating_times} />
             </div>
             <div className="pt-4">
               <p className="text-xs font-bold text-brown-default font-kanit">
@@ -121,11 +125,11 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
               </p>
               <div className="flex flex-row flex-wrap">
                 {shop_repair_tag_links
-                  ? shop_repair_tag_links.data.map(
+                  ? shop_repair_tag_links.map(
                       (shop_repair_tag_link, index) => {
                         const name =
-                          shop_repair_tag_link.attributes.repair_tag.data
-                            .attributes.name;
+                          shop_repair_tag_link.repair_tag
+                            .name;
                         return (
                           <div
                             key={`repaire-tag-${index}`}
@@ -193,7 +197,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
           <div className="divide-y divide-dashed divide-primary">
             {_.orderBy(
               reviews,
-              [(review) => review.attributes.createdAt],
+              [(review) => review.createdAt],
               ['desc']
             ).map((review, index) => (
               <div key={`review-${index}`} className="pt-4 pb-4">
@@ -220,6 +224,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
 };
 
 const Page = ({ shop, reviews, reviewTags }) => {
+  console.log(shop);
   return (
     <>
       <ShopPresenter shop={shop} reviews={reviews} reviewTags={reviewTags} />

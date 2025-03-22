@@ -50,7 +50,7 @@ const TagModalContent = ({
               htmlFor={`tag-checkbox-${index}`}
               className="mr-4 text-base font-medium toppings-list-item text-brown-default font-kanit"
             >
-              {tag.attributes.name}
+              {tag.name}
             </label>
           </div>
         );
@@ -84,7 +84,7 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
   const mainCategoryList = useMemo(() => {
     if (!repairTags) return [];
     return repairTags.filter((tag) => {
-      return !tag.attributes.main_category_id;
+      return !tag.main_category_id;
     });
   }, [repairTags]);
 
@@ -92,23 +92,25 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
     const mapCategories = {};
     mainCategoryList.forEach((mainCategory) => {
       const filteredTagIds = repairTags
-        .filter((tag) => tag.attributes.main_category_id == mainCategory.id)
+        .filter((tag) => tag.main_category_id == mainCategory.id)
         .map((tag) => tag.id);
       mapCategories[mainCategory.id] = filteredTagIds;
     });
     return mapCategories;
   }, [mainCategoryList]);
 
-  const repairTagList = useMemo(() => {
-    if (!selectedMainCategory || !repairTags) return [];
-    const tagIds = mapMainCatToRepairTags[parseInt(selectedMainCategory)];
-    return tagIds.map((id) => {
-      return _.find(repairTags, (repairTag) => {
-        return repairTag.id == id;
-      });
-    });
-  }, [selectedMainCategory, repairTags]);
+  // const repairTagList = useMemo(() => {
+  //   if (!selectedMainCategory || !repairTags) return [];
+  //   const tagIds = mapMainCatToRepairTags[parseInt(selectedMainCategory)];
+  //   console.log('tagIds', tagIds);
+  //   return tagIds.map((id) => {
+  //     return _.find(repairTags, (repairTag) => {
+  //       return repairTag.id == id;
+  //     });
+  //   });
+  // }, [selectedMainCategory, repairTags]);
 
+  console.log('selectedTags', selectedMainCategory);
   const [openSubCategoriesModal, setOpenSubCategoriesModal] = useState(false);
 
   return (
@@ -136,7 +138,7 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
                 value={category.id}
                 className="bg-butter-default"
               >
-                {category.attributes.name}
+                {category.name}
               </option>
             );
           })}

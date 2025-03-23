@@ -91,7 +91,7 @@ const LandingPage = ({}) => {
                     value={category.id}
                     className="bg-butter-default"
                   >
-                    {category.attributes.name}
+                    {category.name}
                   </option>
                 );
               })}

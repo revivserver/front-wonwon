@@ -10,28 +10,16 @@ const TagModalContent = ({
 }) => {
   const [selectAll, setSelectAll] = useState(false);
   useEffect(() => {
-    if (selectedTags.length == 0) {
+    if (!selectedTags || selectedTags.length == 0) {
       setSelectAll(false);
     } else if (repairTagList.length == selectedTags.length) {
       setSelectAll(true);
     }
   }, [selectedTags]);
-  // example data
-  // repairTagList = [
-  //   {
-  //     id: 1,
-  //     attributes: {
-  //       name: 'เปลี่ยนซิป',
-  //       main_category_id: 10,
-  //       createdAt: '2023-07-18T05:44:49.673Z',
-  //       updatedAt: '2023-07-18T05:44:49.670Z'
-  //     }
-  //   }
-  // ];
 
   const onClick = (e) => {
     setSelectAll(false);
-    handleTagSelect(e.target.checked, parseInt(e.target.value));
+    handleTagSelect(e.target.checked, e.target.value);
   };
   return (
     <div>
@@ -41,16 +29,16 @@ const TagModalContent = ({
             <input
               id={`tag-checkbox-${index}`}
               type="checkbox"
-              value={tag.id}
+              value={tag.documentId}
               onChange={onClick}
-              checked={selectedTags.indexOf(tag.id) > -1}
+              checked={selectedTags.indexOf(tag.documentId) > -1}
               className="mr-4 accent-green-default w-4 h-4 border-2 rounded-sm"
             />
             <label
               htmlFor={`tag-checkbox-${index}`}
               className="mr-4 text-base font-medium toppings-list-item text-brown-default font-kanit"
             >
-              {tag.attributes.name}
+              {tag.name}
             </label>
           </div>
         );
@@ -72,43 +60,58 @@ const TagModalContent = ({
 };
 
 const TagSelect = ({ repairTags, handleTagsChange, search }) => {
-  const [selectedMainCategory, setSelectedMainCategory] = useState(10);
-  const [selectedTags, setSelectedTags] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+  const [selectedMainCategory, setSelectedMainCategory] = useState('');
+  const [selectedTags, setSelectedTags] = useState([]);
   const [selectedDistance, setSelectedDistance] = useState(100);
   const handleDistanceChange = (event) => {
     setSelectedDistance(event.target.value);
   };
 
   // FIXME: default search is not sync to selectedTags
+  useEffect(() => {
+    // default tags
+    const defaultMainCategory = repairTags.find((tag) => !tag.main_category_id);
+    if (defaultMainCategory) {
+      const defaultTagDocumentIds = repairTags
+        .filter((tag) => tag.main_category_id == defaultMainCategory.documentId)
+        .map((tag) => tag.documentId);
+
+      setSelectedMainCategory(defaultMainCategory.documentId);
+      setSelectedTags[defaultTagDocumentIds];
+    }
+  }, []);
 
   const mainCategoryList = useMemo(() => {
     if (!repairTags) return [];
     return repairTags.filter((tag) => {
-      return !tag.attributes.main_category_id;
+      return !tag.main_category_id;
     });
   }, [repairTags]);
 
   const mapMainCatToRepairTags = useMemo(() => {
+    if (!repairTags) return {};
     const mapCategories = {};
     mainCategoryList.forEach((mainCategory) => {
       const filteredTagIds = repairTags
-        .filter((tag) => tag.attributes.main_category_id == mainCategory.id)
-        .map((tag) => tag.id);
-      mapCategories[mainCategory.id] = filteredTagIds;
+        .filter((tag) => tag.main_category_id == mainCategory.documentId)
+        .map((tag) => tag.documentId);
+      mapCategories[mainCategory.documentId] = filteredTagIds;
     });
     return mapCategories;
   }, [mainCategoryList]);
 
   const repairTagList = useMemo(() => {
     if (!selectedMainCategory || !repairTags) return [];
-    const tagIds = mapMainCatToRepairTags[parseInt(selectedMainCategory)];
-    return tagIds.map((id) => {
+    const tagIds = mapMainCatToRepairTags[selectedMainCategory];
+
+    return tagIds.map((documentId) => {
       return _.find(repairTags, (repairTag) => {
-        return repairTag.id == id;
+        return repairTag.documentId == documentId;
       });
     });
   }, [selectedMainCategory, repairTags]);
 
+  console.log('selectedTags', selectedMainCategory);
   const [openSubCategoriesModal, setOpenSubCategoriesModal] = useState(false);
 
   return (
@@ -117,10 +120,9 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
         <select
           value={selectedMainCategory}
           onChange={(e) => {
-            const mainSelectedCategory = parseInt(e.target.value);
+            const mainSelectedCategory = e.target.value;
             setSelectedMainCategory(e.target.value);
-            const tagIds =
-              mapMainCatToRepairTags[parseInt(mainSelectedCategory)];
+            const tagIds = mapMainCatToRepairTags[mainSelectedCategory];
             setSelectedTags(tagIds);
             handleTagsChange(tagIds);
           }}
@@ -132,11 +134,11 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
           {mainCategoryList.map((category) => {
             return (
               <option
-                key={category.id}
-                value={category.id}
+                key={category.documentId}
+                value={category.documentId}
                 className="bg-butter-default"
               >
-                {category.attributes.name}
+                {category.name}
               </option>
             );
           })}
@@ -200,14 +202,14 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
                 }
                 setSelectedTags(newTag);
                 if (newTag.length === 0) {
-                  const allTagIds = repairTagList.map((ele) => ele.id);
+                  const allTagIds = repairTagList.map((ele) => ele.documentId);
                   handleTagsChange(allTagIds);
                 } else {
                   handleTagsChange(newTag);
                 }
               }}
               onSelectAll={(selectAll) => {
-                const allTagIds = repairTagList.map((ele) => ele.id);
+                const allTagIds = repairTagList.map((ele) => ele.documentId);
                 if (selectAll) {
                   setSelectedTags(allTagIds);
                   handleTagsChange(allTagIds);
@@ -239,7 +241,9 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
                   onClick={(e) => {
                     e.preventDefault();
                     setSelectedTags([]);
-                    const allTagIds = repairTagList.map((ele) => ele.id);
+                    const allTagIds = repairTagList.map(
+                      (ele) => ele.documentId
+                    );
                     handleTagsChange(allTagIds);
                   }}
                   className="mt-3 border-2 border-solid border-green-default  h-12 text-base font-normal rounded-full w-80 btn btn-primary bg-butter-default text-brown-default font-kanit"

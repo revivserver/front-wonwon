@@ -45,7 +45,7 @@ const ContactModal = ({ contact, onClose }) => {
               เลือกช่องทางติดต่อ
             </h3>
             <div className="flex w-full justify-evenly">
-              {contact.data.map((info, index) => {
+              {contact.map((info, index) => {
                 const linkToContact =
                   contact.name === 'line'
                     ? `https://line.me/R/ti/p/${info}`

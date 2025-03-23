@@ -9,21 +9,18 @@ const getOpeTimeText = (operatedTimes) => {
   const todayDay = getDayStrFromDate(today);
 
   const todayOpen = operatedTimes.find(
-    (operatedTime) => operatedTime.attributes.day === todayDay
+    (operatedTime) => operatedTime.day === todayDay
   );
 
   if (todayOpen) {
     const startDateTime = new Date(
-      today.toDateString() + ' ' + todayOpen.attributes.startTime
+      today.toDateString() + ' ' + todayOpen.startTime
     );
     const endDateTime = new Date(
-      today.toDateString() + ' ' + todayOpen.attributes.endTime
+      today.toDateString() + ' ' + todayOpen.endTime
     );
     if (startDateTime <= today && today <= endDateTime) {
-      const endTime = new moment(
-        todayOpen.attributes.endTime,
-        'HH:mm:ss'
-      ).format('LT');
+      const endTime = new moment(todayOpen.endTime, 'HH:mm:ss').format('LT');
       return `เปิดอยู่ ปิด ${endTime}`;
     }
   }
@@ -41,13 +38,10 @@ const getOpeTimeText = (operatedTimes) => {
   let outputText = '';
   orderedDayInWeek.every((day) => {
     const foundDay = operatedTimes.find(
-      (operatedTime) => operatedTime.attributes.day === day
+      (operatedTime) => operatedTime.day === day
     );
     if (foundDay) {
-      var startTime = new moment(
-        foundDay.attributes.startTime,
-        'HH:mm:ss'
-      ).format('LT');
+      var startTime = new moment(foundDay.startTime, 'HH:mm:ss').format('LT');
       outputText = `ปิดอยู่ เปิด ${startTime}`;
       return false;
     }

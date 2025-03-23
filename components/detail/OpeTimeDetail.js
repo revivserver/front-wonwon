@@ -5,7 +5,7 @@ const OpeTimeDetail = ({ ope }) => {
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
   const sortOpeObj = (opeObjs, day) => {
     return opeObjs.find((opeObj) => {
-      return opeObj.attributes.day === day;
+      return opeObj.day === day;
     });
   };
   const sortedOpeObjs = days.map((day) => {
@@ -17,19 +17,19 @@ const OpeTimeDetail = ({ ope }) => {
       let foundFlg = false;
       outputOpeObj.forEach((record) => {
         if (
-          record.startTime === sortedOpeObj.attributes.startTime &&
-          record.endTime === sortedOpeObj.attributes.endTime
+          record.startTime === sortedOpeObj.startTime &&
+          record.endTime === sortedOpeObj.endTime
         ) {
-          record.days = [...record.days, sortedOpeObj.attributes.day];
+          record.days = [...record.days, sortedOpeObj.day];
           foundFlg = true;
         }
       });
 
       if (!foundFlg) {
         outputOpeObj.push({
-          days: [sortedOpeObj.attributes.day],
-          startTime: sortedOpeObj.attributes.startTime,
-          endTime: sortedOpeObj.attributes.endTime
+          days: [sortedOpeObj.day],
+          startTime: sortedOpeObj.startTime,
+          endTime: sortedOpeObj.endTime
         });
       }
     }

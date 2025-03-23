@@ -23,14 +23,20 @@ class ShopService {
     return this.instance;
   }
 
-  async GetByID(id) {
-    const url = `/api/Shops/${id}?populate=deep`;
+  async GetByID(documentId) {
+    const populate_section =
+      '?populate[0]=shop_repair_tag_links&populate[1]=shop_repair_tag_links.repair_tag&populate[2]=shop_operating_times';
+    const url = `/api/shops/${documentId}?${populate_section}`;
     const resp = await this.axiosClient.get(url);
+    console.log(resp);
     return resp.data?.data;
   }
 
   async GetReviewsByShopID(id) {
-    const url = `/api/reviews?filters[shop]=${id}&populate=deep`;
+    return [];
+
+    // const url = `/api/reviews?filters[shop]=${id}&populate=deep`;
+    const url = `/api/reviews?filters[shop]=${id}`;
     const resp = await this.axiosClient.get(url);
     return resp.data?.data;
   }
@@ -41,7 +47,7 @@ class ShopService {
         filters: {
           shop_repair_tag_links: {
             repair_tag: {
-              id: {
+              documentId: {
                 $in: checkedRepairTagText
               }
             }
@@ -72,13 +78,17 @@ class ShopService {
         encodeValuesOnly: true // prettify URL
       }
     );
-    const url = `/api/Shops?${query}&sort[0]=name&populate=deep&pagination[pageSize]=150`;
+    const populate_section =
+      '?populate[0]=shop_repair_tag_links&populate[1]=shop_repair_tag_links.repair_tag&populate[2]=shop_operating_times';
+    const url = `/api/shops?${query}&sort[0]=name&pagination[pageSize]=150&${populate_section}`;
     const resp = await this.axiosClient.get(url);
     return resp.data?.data;
   }
 
   async getAllShops() {
-    const url = `/api/Shops/?sort[0]=name&populate=*&pagination[pageSize]=150`;
+    const populate_section =
+      '?populate[0]=shop_repair_tag_links&populate[1]=shop_repair_tag_links.repair_tag&populate[2]=shop_operating_times';
+    const url = `/api/Shops/?sort[0]=name&populate=*&pagination[pageSize]=150&${populate_section}`;
     const resp = await this.axiosClient.get(url);
     return resp.data?.data;
   }

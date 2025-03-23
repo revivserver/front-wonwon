@@ -17,10 +17,10 @@ import { faLocationDot, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 const ReviewSummary = ({ reviews }) => {
-  const reviewScores = reviews.data.map((review) => {
-    return review.attributes.score;
+  const reviewScores = reviews.map((review) => {
+    return review.score;
   });
-  const numReviewers = reviews.data.length;
+  const numReviewers = reviews.length;
 
   const averageScore =
     numReviewers !== 0
@@ -54,8 +54,8 @@ const ShopsPage = ({ shops, repairTags }) => {
     const searchResp = shopService.GetShopsBySearch(inputText, searchTags);
     const searchShops = await searchResp;
     searchShops.sort((a, b) =>
-      calculateDistance(a.attributes.latitude, a.attributes.longitude) >
-      calculateDistance(b.attributes.latitude, b.attributes.longitude)
+      calculateDistance(a.latitude, a.longitude) >
+      calculateDistance(b.latitude, b.longitude)
         ? 1
         : -1
     );
@@ -123,15 +123,13 @@ const ShopsPage = ({ shops, repairTags }) => {
             {tempShops ? (
               <div className="space-y-2 flex-column">
                 {tempShops.map((shop) => {
-                  const id = shop.id;
+                  const id = shop.documentId;
                   const url = `/shops/${id}`;
                   const distance = calculateDistance(
-                    shop.attributes.latitude,
-                    shop.attributes.longitude
+                    shop.latitude,
+                    shop.longitude
                   );
-                  const opeTime = OpeTimeList(
-                    shop.attributes.shop_operating_times.data
-                  );
+                  const opeTime = OpeTimeList(shop.shop_operating_times);
                   let OpeFlag = opeTime.includes('เปิดอยู่');
                   return (
                     <div
@@ -144,7 +142,7 @@ const ShopsPage = ({ shops, repairTags }) => {
                             OpeFlag ? 'text-brick' : 'text-brown-light'
                           } font-medium font-kanit`}
                         >
-                          {shop.attributes.name}
+                          {shop.name}
                         </div>
                         <div
                           className={`text-xs ${
@@ -163,9 +161,8 @@ const ShopsPage = ({ shops, repairTags }) => {
                           } font-normal font-kanit`}
                         >
                           <div>
-                            {shop.attributes.address_detail}{' '}
-                            {shop.attributes.sub_district}{' '}
-                            {shop.attributes.district}
+                            {shop.address_detail} {shop.sub_district}{' '}
+                            {shop.district}
                           </div>
                         </div>
                         {opeTime ? (
@@ -186,8 +183,8 @@ const ShopsPage = ({ shops, repairTags }) => {
                             OpeFlag ? 'text-brick' : 'text-brown-light'
                           } font-light font-kanit`}
                         >
-                          {shop.attributes.reviews ? (
-                            <ReviewSummary reviews={shop.attributes.reviews} />
+                          {shop.reviews ? (
+                            <ReviewSummary reviews={shop.reviews} />
                           ) : null}
                         </div>
                       </a>
@@ -206,11 +203,6 @@ const ShopsPage = ({ shops, repairTags }) => {
 };
 
 ShopsPage.getInitialProps = async () => {
-  // const shopResp = shopService.getAllShops();
-  // const repairResp = repairTagService.getAllRepairTag();
-  // const [shops, repairTags] = await Promise.all([shopResp, repairResp]);
-  // return { shops, repairTags };
-
   const repairResp = repairTagService.getAllRepairTag();
   const [repairTags] = await Promise.all([repairResp]);
   const shops = [];

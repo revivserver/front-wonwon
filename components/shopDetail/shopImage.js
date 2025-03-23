@@ -31,19 +31,17 @@ const ShopImage = ({ shop_images }) => {
     <div ref={slideRef} className="relative mx-4 select-none ">
       <div className="flex justify-center p-4 aspect-w-16 aspect-h-9 ">
         <Image
-          src={shop_images[currentIndex].attributes.url}
+          src={shop_images[currentIndex].url}
           className="rounded-[15px]"
           alt="shop image"
           width={450}
           height={300}
-          style={{objectFit: "cover", width: '450px', height: '300px'}}
+          style={{ objectFit: 'cover', width: '450px', height: '300px' }}
         />
       </div>
 
       <div className="absolute flex items-center justify-between w-full px-5 transform -translate-y-1/2 top-1/2">
-        <button
-          onClick={handleOnPrevClick}
-        >
+        <button onClick={handleOnPrevClick}>
           <FontAwesomeIcon
             icon={faCircleArrowLeft}
             // TODO: wait feedback from Wai
@@ -53,9 +51,7 @@ const ShopImage = ({ shop_images }) => {
             className="text-green-default border-2 rounded-xl border-brown-default bg-brown-default"
           />
         </button>
-        <button
-          onClick={handleOnNextClick}
-        >
+        <button onClick={handleOnNextClick}>
           <FontAwesomeIcon
             icon={faCircleArrowRight}
             // className="text-green-default drop-shadow-lg"

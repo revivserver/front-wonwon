@@ -1,8 +1,8 @@
-import Image from "next/image";
+import Image from 'next/image';
 import moment from 'moment';
 
 const Review = ({ review }) => {
-  const reviewInfo = review.attributes;
+  const reviewInfo = review;
   const createDate = moment(reviewInfo.createdAt);
 
   const daysDiff = moment().diff(createDate, 'days');
@@ -13,10 +13,10 @@ const Review = ({ review }) => {
     presenteCreateDate = createDate.format('ll');
   }
 
-  const images = reviewInfo.images ? reviewInfo.images.data : null;
+  const images = reviewInfo.images ? reviewInfo.images : null;
   const reviewTags = reviewInfo.review_tag_links
-    ? reviewInfo.review_tag_links.data.map((tagLinks) => {
-        return tagLinks.attributes.review_tag.data.attributes;
+    ? reviewInfo.review_tag_links.map((tagLinks) => {
+        return tagLinks.review_tag;
       })
     : null;
   return (
@@ -54,12 +54,7 @@ const Review = ({ review }) => {
                   marginBottom: '5px'
                 }}
               >
-                <Image
-                  key={index}
-                  alt="/"
-                  src={image.attributes.url}
-                  layout="fill"
-                />
+                <Image key={index} alt="/" src={image.url} layout="fill" />
               </div>
             );
           })}

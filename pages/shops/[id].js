@@ -24,6 +24,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
 
   const { id } = shop;
   // console.log(shop);
+  // console.log(shop);
   const {
     name,
     address_detail,
@@ -37,10 +38,8 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
     payments,
     google_map_url,
     notes
-  // } = shop.attributes;
   } = shop;
-  // console.log(shop);
-  // console.log(shop.contacts.phone?.length);
+  console.log(shop);
 
   const condition =
     notes && notes?.length > 0
@@ -54,12 +53,17 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
     let res = {};
     if (clickedContactIcon === 'instagram') {
       res = contacts.instagram?.length > 0 ? contacts.instagram : null;
+      res = contacts.instagram?.length > 0 ? contacts.instagram : null;
     } else if (clickedContactIcon === 'line') {
+      res = contacts.line?.length > 0 ? contacts.line : null;
       res = contacts.line?.length > 0 ? contacts.line : null;
     } else {
       res = contacts.facebook?.length > 0 ? contacts.facebook : null;
+      res = contacts.facebook?.length > 0 ? contacts.facebook : null;
     }
-    if (!!res){res.name = clickedContactIcon ;}
+    if (!!res) {
+      res.name = clickedContactIcon;
+    }
     return res;
   }, [contacts, clickedContactIcon]);
 
@@ -86,6 +90,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
         <p className="mx-4 text-2xl font-medium text-brick font-kanit">
           {name}
         </p>
+        {/* <ShopImage shop_images={shop_images} /> */}
         {/* <ShopImage shop_images={shop_images} /> */}
         <div className="flex mx-4 mb-2 space-x-2 ">
           {phones && phones.length > 0 ? (
@@ -118,6 +123,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
             <div className="flex">
               <FontAwesomeIcon icon={faClock} className="mr-2 fa-xl" />
               <OpeTimeDetail ope={shop.shop_operating_times} />
+              <OpeTimeDetail ope={shop.shop_operating_times} />
             </div>
             <div className="pt-4">
               <p className="text-xs font-bold text-brown-default font-kanit">
@@ -125,21 +131,17 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
               </p>
               <div className="flex flex-row flex-wrap">
                 {shop_repair_tag_links
-                  ? shop_repair_tag_links.map(
-                      (shop_repair_tag_link, index) => {
-                        const name =
-                          shop_repair_tag_link.repair_tag
-                            .name;
-                        return (
-                          <div
-                            key={`repaire-tag-${index}`}
-                            className="mr-3 mt-3 p-1 border-[1px] border-primary-content rounded text-brown-mid text-base font-kanit font-normal"
-                          >
-                            {name}
-                          </div>
-                        );
-                      }
-                    )
+                  ? shop_repair_tag_links.map((shop_repair_tag_link, index) => {
+                      const name = shop_repair_tag_link.repair_tag.name;
+                      return (
+                        <div
+                          key={`repaire-tag-${index}`}
+                          className="mr-3 mt-3 p-1 border-[1px] border-primary-content rounded text-brown-mid text-base font-kanit font-normal"
+                        >
+                          {name}
+                        </div>
+                      );
+                    })
                   : null}
               </div>
             </div>
@@ -195,15 +197,13 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
             รีวิวจากผู้ใช้งาน
           </p>
           <div className="divide-y divide-dashed divide-primary">
-            {_.orderBy(
-              reviews,
-              [(review) => review.createdAt],
-              ['desc']
-            ).map((review, index) => (
-              <div key={`review-${index}`} className="pt-4 pb-4">
-                <Review review={review} />
-              </div>
-            ))}
+            {_.orderBy(reviews, [(review) => review.createdAt], ['desc']).map(
+              (review, index) => (
+                <div key={`review-${index}`} className="pt-4 pb-4">
+                  <Review review={review} />
+                </div>
+              )
+            )}
           </div>
         </div>
       </div>

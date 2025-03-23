@@ -27,10 +27,7 @@ const mapList = ({ initialLocation, shops }) => {
           />
           {shops.map((shop) => (
             <div key={shop.id}>
-              <Marker
-                latitude={shop.attributes.latitude}
-                longitude={shop.attributes.longitude}
-              />
+              <Marker latitude={shop.latitude} longitude={shop.longitude} />
             </div>
           ))}
           <NavigationControl />

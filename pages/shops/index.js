@@ -203,11 +203,6 @@ const ShopsPage = ({ shops, repairTags }) => {
 };
 
 ShopsPage.getInitialProps = async () => {
-  // const shopResp = shopService.getAllShops();
-  // const repairResp = repairTagService.getAllRepairTag();
-  // const [shops, repairTags] = await Promise.all([shopResp, repairResp]);
-  // return { shops, repairTags };
-
   const repairResp = repairTagService.getAllRepairTag();
   const [repairTags] = await Promise.all([repairResp]);
   const shops = [];

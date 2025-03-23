@@ -20,12 +20,10 @@ const TagModalContent = ({
   // repairTagList = [
   //   {
   //     id: 1,
-  //     attributes: {
   //       name: 'เปลี่ยนซิป',
   //       main_category_id: 10,
   //       createdAt: '2023-07-18T05:44:49.673Z',
   //       updatedAt: '2023-07-18T05:44:49.670Z'
-  //     }
   //   }
   // ];
 

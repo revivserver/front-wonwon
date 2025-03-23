@@ -37,10 +37,8 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
     payments,
     google_map_url,
     notes
-  // } = shop.attributes;
   } = shop;
-  // console.log(shop);
-  // console.log(shop.contacts.phone?.length);
+  console.log(shop);
 
   const condition =
     notes && notes?.length > 0
@@ -59,7 +57,9 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
     } else {
       res = contacts.facebook?.length > 0 ? contacts.facebook : null;
     }
-    if (!!res){res.name = clickedContactIcon ;}
+    if (!!res) {
+      res.name = clickedContactIcon;
+    }
     return res;
   }, [contacts, clickedContactIcon]);
 
@@ -125,21 +125,17 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
               </p>
               <div className="flex flex-row flex-wrap">
                 {shop_repair_tag_links
-                  ? shop_repair_tag_links.map(
-                      (shop_repair_tag_link, index) => {
-                        const name =
-                          shop_repair_tag_link.repair_tag
-                            .name;
-                        return (
-                          <div
-                            key={`repaire-tag-${index}`}
-                            className="mr-3 mt-3 p-1 border-[1px] border-primary-content rounded text-brown-mid text-base font-kanit font-normal"
-                          >
-                            {name}
-                          </div>
-                        );
-                      }
-                    )
+                  ? shop_repair_tag_links.map((shop_repair_tag_link, index) => {
+                      const name = shop_repair_tag_link.repair_tag.name;
+                      return (
+                        <div
+                          key={`repaire-tag-${index}`}
+                          className="mr-3 mt-3 p-1 border-[1px] border-primary-content rounded text-brown-mid text-base font-kanit font-normal"
+                        >
+                          {name}
+                        </div>
+                      );
+                    })
                   : null}
               </div>
             </div>
@@ -195,15 +191,13 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
             รีวิวจากผู้ใช้งาน
           </p>
           <div className="divide-y divide-dashed divide-primary">
-            {_.orderBy(
-              reviews,
-              [(review) => review.createdAt],
-              ['desc']
-            ).map((review, index) => (
-              <div key={`review-${index}`} className="pt-4 pb-4">
-                <Review review={review} />
-              </div>
-            ))}
+            {_.orderBy(reviews, [(review) => review.createdAt], ['desc']).map(
+              (review, index) => (
+                <div key={`review-${index}`} className="pt-4 pb-4">
+                  <Review review={review} />
+                </div>
+              )
+            )}
           </div>
         </div>
       </div>
@@ -224,7 +218,6 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
 };
 
 const Page = ({ shop, reviews, reviewTags }) => {
-  console.log(shop);
   return (
     <>
       <ShopPresenter shop={shop} reviews={reviews} reviewTags={reviewTags} />

@@ -16,7 +16,7 @@ const TagReviews = ({ reviewTags, handleTagClicked }) => {
             } text-base font-kanit font-normal flex flex-row flex-wrap`}
           >
             <button value={tag.id} checked={tag.selected} onClick={checkValue}>
-              {tag.attributes.name}
+              {tag.name}
             </button>
           </div>
         );

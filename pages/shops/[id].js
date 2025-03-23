@@ -123,7 +123,6 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
             <div className="flex">
               <FontAwesomeIcon icon={faClock} className="mr-2 fa-xl" />
               <OpeTimeDetail ope={shop.shop_operating_times} />
-              <OpeTimeDetail ope={shop.shop_operating_times} />
             </div>
             <div className="pt-4">
               <p className="text-xs font-bold text-brown-default font-kanit">

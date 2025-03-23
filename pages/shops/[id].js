@@ -24,6 +24,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
 
   const { id } = shop;
   // console.log(shop);
+  // console.log(shop);
   const {
     name,
     address_detail,
@@ -52,9 +53,12 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
     let res = {};
     if (clickedContactIcon === 'instagram') {
       res = contacts.instagram?.length > 0 ? contacts.instagram : null;
+      res = contacts.instagram?.length > 0 ? contacts.instagram : null;
     } else if (clickedContactIcon === 'line') {
       res = contacts.line?.length > 0 ? contacts.line : null;
+      res = contacts.line?.length > 0 ? contacts.line : null;
     } else {
+      res = contacts.facebook?.length > 0 ? contacts.facebook : null;
       res = contacts.facebook?.length > 0 ? contacts.facebook : null;
     }
     if (!!res) {
@@ -87,6 +91,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
           {name}
         </p>
         {/* <ShopImage shop_images={shop_images} /> */}
+        {/* <ShopImage shop_images={shop_images} /> */}
         <div className="flex mx-4 mb-2 space-x-2 ">
           {phones && phones.length > 0 ? (
             <a
@@ -117,6 +122,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
           <div className="grid gap-6 px-10 py-6 my-3 divide-y card divide-dashed divide-butter-dark">
             <div className="flex">
               <FontAwesomeIcon icon={faClock} className="mr-2 fa-xl" />
+              <OpeTimeDetail ope={shop.shop_operating_times} />
               <OpeTimeDetail ope={shop.shop_operating_times} />
             </div>
             <div className="pt-4">
@@ -218,6 +224,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
 };
 
 const Page = ({ shop, reviews, reviewTags }) => {
+  console.log(shop);
   return (
     <>
       <ShopPresenter shop={shop} reviews={reviews} reviewTags={reviewTags} />

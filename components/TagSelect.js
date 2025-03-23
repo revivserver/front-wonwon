@@ -111,6 +111,7 @@ const TagSelect = ({ repairTags, handleTagsChange, search }) => {
     });
   }, [selectedMainCategory, repairTags]);
 
+  console.log('selectedTags', selectedMainCategory);
   const [openSubCategoriesModal, setOpenSubCategoriesModal] = useState(false);
 
   return (

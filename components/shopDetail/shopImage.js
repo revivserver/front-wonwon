@@ -10,12 +10,20 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ShopImage = ({ shop_images }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const slideRef = useRef();
+  const shopImageLoader = useMemo(() => {
+    const baseUrl = config.apiBaseUrl.substring(
+      0,
+      config.apiBaseUrl.length - 1
+    );
+    if (shop_images.length < currentIndex) return () => '';
+    return () => baseUrl + shop_images[currentIndex].formats.small.url;
+  }, [currentIndex, shop_images]);
+
   if (!shop_images || shop_images.length <= 0) {
     return null;
   }
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const slideRef = useRef();
 
   const handleOnNextClick = () => {
     const count = (currentIndex + 1) % shop_images.length;
@@ -28,15 +36,6 @@ const ShopImage = ({ shop_images }) => {
     setCurrentIndex(count);
     slideRef.current.classList.add('fade-anim');
   };
-
-  const shopImageLoader = useMemo(() => {
-    const baseUrl = config.apiBaseUrl.substring(
-      0,
-      config.apiBaseUrl.length - 1
-    );
-
-    return () => baseUrl + shop_images[currentIndex].formats.small.url;
-  }, [currentIndex, shop_images]);
 
   return (
     <div ref={slideRef} className="relative mx-4 select-none ">

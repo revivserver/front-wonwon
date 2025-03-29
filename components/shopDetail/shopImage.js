@@ -36,7 +36,7 @@ const ShopImage = ({ shop_images }) => {
     );
 
     return () => baseUrl + shop_images[currentIndex].formats.small.url;
-  }, [currentIndex]);
+  }, [currentIndex, shop_images]);
 
   return (
     <div ref={slideRef} className="relative mx-4 select-none ">

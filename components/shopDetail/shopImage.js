@@ -13,12 +13,9 @@ const ShopImage = ({ shop_images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const slideRef = useRef();
   const shopImageLoader = useMemo(() => {
-    const baseUrl = config.apiBaseUrl.substring(
-      0,
-      config.apiBaseUrl.length - 1
-    );
     if (shop_images.length < currentIndex) return () => '';
-    return () => baseUrl + shop_images[currentIndex].formats.small.url;
+    return () =>
+      config.apiBaseUrl + shop_images[currentIndex].formats.small.url;
   }, [currentIndex, shop_images]);
 
   if (!shop_images || shop_images.length <= 0) {

@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import Image from 'next/image';
+import config from '@/config/index';
 
 import {
   faCircleArrowLeft,
@@ -9,8 +10,11 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const ShopImage = ({ shop_images }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  if (!shop_images || shop_images.length <= 0) {
+    return null;
+  }
 
+  const [currentIndex, setCurrentIndex] = useState(0);
   const slideRef = useRef();
 
   const handleOnNextClick = () => {
@@ -24,14 +28,22 @@ const ShopImage = ({ shop_images }) => {
     setCurrentIndex(count);
     slideRef.current.classList.add('fade-anim');
   };
-  if (!shop_images || shop_images.length <= 0) {
-    return null;
-  }
+
+  const shopImageLoader = useMemo(() => {
+    const baseUrl = config.apiBaseUrl.substring(
+      0,
+      config.apiBaseUrl.length - 1
+    );
+
+    return () => baseUrl + shop_images[currentIndex].formats.small.url;
+  }, [currentIndex]);
+
   return (
     <div ref={slideRef} className="relative mx-4 select-none ">
       <div className="flex justify-center p-4 aspect-w-16 aspect-h-9 ">
         <Image
-          src={shop_images[currentIndex].url}
+          loader={shopImageLoader}
+          src="shop_image.jpg"
           className="rounded-[15px]"
           alt="shop image"
           width={450}

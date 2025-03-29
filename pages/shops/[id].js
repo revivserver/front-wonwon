@@ -23,8 +23,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
   const [clickedContactIcon, setClickedContactIcon] = useState('');
 
   const { id } = shop;
-  // console.log(shop);
-  // console.log(shop);
+
   const {
     name,
     address_detail,
@@ -90,8 +89,7 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
         <p className="mx-4 text-2xl font-medium text-brick font-kanit">
           {name}
         </p>
-        {/* <ShopImage shop_images={shop_images} /> */}
-        {/* <ShopImage shop_images={shop_images} /> */}
+        <ShopImage shop_images={shop_images} />
         <div className="flex mx-4 mb-2 space-x-2 ">
           {phones && phones.length > 0 ? (
             <a

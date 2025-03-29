@@ -25,7 +25,7 @@ class ShopService {
 
   async GetByID(documentId) {
     const populate_section =
-      '?populate[0]=shop_repair_tag_links&populate[1]=shop_repair_tag_links.repair_tag&populate[2]=shop_operating_times';
+      '?populate[0]=shop_repair_tag_links&populate[1]=shop_repair_tag_links.repair_tag&populate[2]=shop_operating_times&populate[3]=shop_images';
     const url = `/api/shops/${documentId}?${populate_section}`;
     const resp = await this.axiosClient.get(url);
     console.log(resp);

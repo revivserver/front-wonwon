@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import moment from 'moment';
+import config from '@/config/index';
 
 const Review = ({ review }) => {
   const reviewInfo = review;
@@ -54,7 +55,15 @@ const Review = ({ review }) => {
                   marginBottom: '5px'
                 }}
               >
-                <Image key={index} alt="/" src={image.url} layout="fill" />
+                <Image
+                  key={index}
+                  loader={() => {
+                    const url = config.apiBaseUrl + image.formats.small.url;
+                    return url;
+                  }}
+                  src="shop_image.jpg"
+                  layout="fill"
+                />
               </div>
             );
           })}

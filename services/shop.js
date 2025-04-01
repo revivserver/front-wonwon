@@ -28,15 +28,21 @@ class ShopService {
       '?populate[0]=shop_repair_tag_links&populate[1]=shop_repair_tag_links.repair_tag&populate[2]=shop_operating_times&populate[3]=shop_images';
     const url = `/api/shops/${documentId}?${populate_section}`;
     const resp = await this.axiosClient.get(url);
-    console.log(resp);
     return resp.data?.data;
   }
 
-  async GetReviewsByShopID(id) {
-    return [];
-
-    // const url = `/api/reviews?filters[shop]=${id}&populate=deep`;
-    const url = `/api/reviews?filters[shop]=${id}`;
+  async GetReviewsByShopID(documentId) {
+    const query = qs.stringify({
+      filters: {
+        shop: {
+          documentId: {
+            $in: documentId
+          }
+        }
+      }
+    });
+    const populate_section = 'populate[0]=review_tag_links&populate[1]=review_tag_links.review_tag&populate[2]=images';
+    const url = `/api/reviews?${query}&pagination[pageSize]=100&${populate_section}`;
     const resp = await this.axiosClient.get(url);
     return resp.data?.data;
   }

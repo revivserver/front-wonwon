@@ -38,7 +38,6 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
     google_map_url,
     notes
   } = shop;
-  console.log(shop);
 
   const condition =
     notes && notes?.length > 0
@@ -221,7 +220,6 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
 };
 
 const Page = ({ shop, reviews, reviewTags }) => {
-  console.log(shop);
   return (
     <>
       <ShopPresenter shop={shop} reviews={reviews} reviewTags={reviewTags} />

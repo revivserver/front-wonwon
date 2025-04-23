@@ -88,7 +88,9 @@ const ShopPresenter = ({ shop, reviews, reviewTags }) => {
         <p className="mx-4 text-2xl font-medium text-brick font-kanit">
           {name}
         </p>
-        <ShopImage shop_images={shop_images} />
+        {shop_images && shop_images.length > 0 ? (
+          <ShopImage shop_images={shop_images} />
+        ) : null}
         <div className="flex mx-4 mb-2 space-x-2 ">
           {phones && phones.length > 0 ? (
             <a

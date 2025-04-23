@@ -1,6 +1,6 @@
-import React, { useState, useRef, useMemo } from 'react';
-import Image from 'next/image';
 import config from '@/config/index';
+import Image from 'next/image';
+import { useMemo, useRef, useState } from 'react';
 
 import {
   faCircleArrowLeft,
@@ -14,8 +14,12 @@ const ShopImage = ({ shop_images }) => {
   const slideRef = useRef();
   const shopImageLoader = useMemo(() => {
     if (shop_images.length < currentIndex) return () => '';
+    if ('small' in shop_images[currentIndex].formats) {
+      return () =>
+        config.apiBaseUrl + shop_images[currentIndex].formats.small.url;
+    }
     return () =>
-      config.apiBaseUrl + shop_images[currentIndex].formats.small.url;
+      config.apiBaseUrl + shop_images[currentIndex].formats.thumbnail.url;
   }, [currentIndex, shop_images]);
 
   if (!shop_images || shop_images.length <= 0) {
